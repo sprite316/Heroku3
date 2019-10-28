@@ -45,7 +45,16 @@ INSTALLED_APPS = [
     'elections'
 ]
 
-MIDDLEWARE = [ 'whitenoise.middleware.WhiteNoiseMiddleware', 'django.middleware.security.SecurityMiddleware', 'django.contrib.sessions.middleware.SessionMiddleware', 'django.middleware.common.CommonMiddleware', 'django.middleware.csrf.CsrfViewMiddleware', 'django.contrib.auth.middleware.AuthenticationMiddleware', 'django.contrib.messages.middleware.MessageMiddleware', 'django.middleware.clickjacking.XFrameOptionsMiddleware', ]
+MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+]
 
 
 ROOT_URLCONF = 'mysite.urls'
@@ -116,12 +125,17 @@ USE_TZ = True
 
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+#STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIR = [
     os.path.join(PROJECT_ROOT, 'static'),
 ]
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+# Static root를 지정하지 않으면 에러 발생
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# whitenoise 4 버전부터 설정이 바뀌었기 때문에 이 부분을 꼭 기존의 내용들에서 업데이트 해야 함
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesSto
 
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
