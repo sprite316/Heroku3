@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'djangoyoon3',
+        'NAME': 'postgresql-tetrahedral-08067',
         'USER': 'sprite316',
         'PASSWORD': 'lambo777',
         'HOST': 'localhost',
