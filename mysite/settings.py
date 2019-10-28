@@ -129,6 +129,3 @@ STATICFILES_DIR = [
     os.path.join(PROJECT_ROOT, 'static'),
 ]
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-
-
-출처: https://dgkim5360.tistory.com/entry/deploy-django-project-on-heroku [개발새발로그]
