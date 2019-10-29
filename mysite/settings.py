@@ -124,12 +124,12 @@ USE_TZ = True
 
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-#STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-#STATICFILES_DIR = [
-#    os.path.join(PROJECT_ROOT, 'static'),
-#]
+STATICFILES_DIR = [
+    os.path.join(PROJECT_ROOT, 'static'),
+]
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Static root를 지정하지 않으면 에러 발생
