@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/
 #application = get_wsgi_application()
 
 
-
+###아래꺼 하고나서 안됨
 import os
 from django.core.wsgi import get_wsgi_application
 from whitenoise.django import DjangoWhiteNoise
