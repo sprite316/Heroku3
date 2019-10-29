@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 #DEBUG = config('DEBUG', default=False, cast=bool)
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('DATABASE_URL')
+    default=config('DATABASE_URL')
     )
 }
 
