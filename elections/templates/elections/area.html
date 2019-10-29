@@ -27,7 +27,7 @@
         <tr>
             <td> {{candidate.name}}</td>
             <td> {{candidate.introduction}} </td>
-            <td> 기호{{candidate.party_number}}번 </td>
+            <td> 기호{{candidate.party}}번 </td>
             <td>
                 <form action = "/polls/{{poll.id}}/" method="post">
                  {% csrf_token %}
