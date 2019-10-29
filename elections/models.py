@@ -6,7 +6,8 @@ class Candidate(models.Model):
     name = models.CharField(max_length=10)
     introduction = models.TextField()
     area = models.CharField(max_length=15)
-    party_number = models.TextField()
+    party_number = models.CharField(max_length=15)
+    #party_number = models.CharField(max_length=10)
 
     def __str__(self):
         return self.name
