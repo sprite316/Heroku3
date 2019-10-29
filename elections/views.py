@@ -25,7 +25,7 @@ def index(request):
         new_candidate = Candidate(name=json_data[i]["day"],
         introduction=json_data[i]["title"],
         area=json_data[i]["count"],
-        party=json_data[i]["link"])
+        party_number=json_data[i]["link"])
         new_candidate.save()
 
     context = {'candidates':candidates}
