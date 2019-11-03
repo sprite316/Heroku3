@@ -25,7 +25,8 @@
       {% for candidate in candidates %}
         <tr>
             <td> {{candidate.date}}</td>
-            <td> <a href = {{candidate.link}}>{{candidate.title}}</a></td>
+            <td> <a href = {{candidate.link}}>{{candidate.title}}</a>
+            <img src={{candidate.image}} width="30" height="30"></td>
             <td> {{candidate.count}}</td>
         </tr>
       {% endfor %}
