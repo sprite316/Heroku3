@@ -10,7 +10,7 @@ class Candidate(models.Model):
     image = models.TextField(null=True)
 
     def __str__(self):
-        return self.date
+        return self.title
 
 
 #class Poll(models.Model):
