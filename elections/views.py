@@ -22,10 +22,10 @@ def index(request):
 
     for i in range(len(json_data)):
     #for i in range(5):
-        new_candidate = Candidate(name=json_data[i]["day"],
-        introduction=json_data[i]["title"],
-        area=json_data[i]["count"],
-        party_number=json_data[i]["link"])
+        new_candidate = Candidate(date=json_data[i]["day"],
+        title=json_data[i]["title"],
+        count=json_data[i]["count"],
+        link=json_data[i]["link"])
         new_candidate.save()
 
     context = {'candidates':candidates}
