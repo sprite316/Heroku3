@@ -34,11 +34,11 @@ def ygosu_parsing():
             title = tit.a.get_text()
             link = tit.a.get('href')
             #image
-            html = urlopen(link)
-            source = html.read()
-            html.close()
-            soup = BS(source, "html.parser")
-            image = soup.find(class_='src')
+            #html = urlopen(link)
+            #source = html.read()
+            #html.close()
+            #soup = BS(source, "html.parser")
+            #image = soup.find(class_='src')
             #
             read = count.get_text()
             date = day.get_text()
