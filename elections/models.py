@@ -3,10 +3,11 @@ from django.db import models
 # Create your models here.
 
 class Candidate(models.Model):
-    name = models.TextField(null=True)
-    introduction = models.TextField(null=True)
-    area = models.TextField(null=True)
-    party_number = models.TextField(null=True)
+    date = models.TextField(null=True)
+    title = models.TextField(null=True)
+    count = models.TextField(null=True)
+    link = models.TextField(null=True)
+    image = models.TextField(null=True)
 
     def __str__(self):
         return self.name

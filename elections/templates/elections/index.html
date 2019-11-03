@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>선거 후보</title>
+  <title>맛자랑</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -24,9 +24,9 @@
         <tbody>
       {% for candidate in candidates %}
         <tr>
-            <td> {{candidate.name}}</td>
-            <td> <a href = {{candidate.party_number}}>{{candidate.introduction}}</a></td>
-            <td> {{candidate.area}}</td>
+            <td> {{candidate.date}}</td>
+            <td> <a href = {{candidate.link}}>{{candidate.title}}</a></td>
+            <td> {{candidate.count}}</td>
         </tr>
       {% endfor %}
         </tbody>

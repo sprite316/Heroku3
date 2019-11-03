@@ -33,6 +33,13 @@ def ygosu_parsing():
         for tit, count, day in zip(tits, counts, days):
             title = tit.a.get_text()
             link = tit.a.get('href')
+            #image
+            html = urlopen(link)
+            source = html.read()
+            html.close()
+            soup = BS(source, "html.parser")
+            image = soup.find(class_='src')
+            #
             read = count.get_text()
             date = day.get_text()
             temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
@@ -74,8 +81,8 @@ if __name__=='__main__':
     toJson(parsed_data)
 
     for i in range(len(parsed_data)):
-        new_candidate = Candidate(name=parsed_data[i]["day"],
-        introduction=parsed_data[i]["title"],
-        area=parsed_data[i]["count"],
-        party_number=parsed_data[i]["link"])
+        new_candidate = Candidate(date=parsed_data[i]["day"],
+        title=parsed_data[i]["title"],
+        count=parsed_data[i]["count"],
+        link=parsed_data[i]["link"])
         new_candidate.save()
