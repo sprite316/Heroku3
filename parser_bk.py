@@ -14,7 +14,7 @@ def toJson(mnet_dict):
     with open('title_link.json', 'w', encoding='utf-8') as file:
         json.dump(mnet_dict, file, ensure_ascii=False, indent='\t')
 
-def ygosu_parsing():
+def parsing():
     temp_dict = {}
     temp_list = []
 
@@ -36,40 +36,15 @@ def ygosu_parsing():
             date = day.get_text()
             temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
             temp_list.append(temp_dict)
-    #toJson(temp_list)
+
+    toJson(temp_list)
+
     return temp_list
 
-def ou_parsing():
-    temp_dict = {}
-    temp_list = []
-
-    for page in range(1,8):
-        url = 'http://www.todayhumor.co.kr/board/list.php?table=humorbest&page={}'.format(page)
-        html = urlopen(url)
-        source = html.read()
-        html.close()
-
-        soup = BS(source, "html.parser")
-        table = soup.find(class_="table_list")
-        tits = table.find_all(class_="subject")
-        counts = table.find_all(class_="hits")
-        days = table.find_all(class_="date")
-        for tit, count, day in zip(tits, counts, days):
-            title = tit.a.get_text()
-            link = tit.a.get('href')
-            read = count.get_text()
-            date = day.get_text()
-            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
-            temp_list.append(temp_dict)
-    #toJson(temp_list)
-    return temp_list
+#parsing()
 
 if __name__=='__main__':
-    parsed_data = []
-    parsed_data = ygosu_parsing()
-    parsed_data = ou_parsing()
-    parsed_data.extend(parsed_data)
-
+    parsed_data = parsing()
     for i in range(len(parsed_data)):
         new_candidate = Candidate(name=parsed_data[i]["day"],
         introduction=parsed_data[i]["title"],
