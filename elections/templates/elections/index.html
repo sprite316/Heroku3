@@ -682,14 +682,16 @@
                 <a href={{candidate.link}} target="_blank" class="link_popular">
                   <div class="thumb_info_type">
                     <div class="wrap_thumb">
-                      <img src="{{candidate.image}}" class="img_thumb" alt class="img_thumb">
+                      <!--<img src="{{candidate.image}}" alt class="img_thumb">-->
+                      <img src="{{candidate.image}}" width="104" height="72" alt>
                     </div>
                     <div class="wrap_info">
-                    <p class>{{candidate.title}}</p>
+                      <p class>{{candidate.title}}</p>
                     </div>
                   </div>
                 </a>
-              </li>{% endfor %}
+              </li>
+              {% endfor %}
             </ol>
           </div>
         </div>
