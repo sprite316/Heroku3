@@ -57,14 +57,14 @@ def ygosu_parsing():
             temp_list.append(temp_dict)
     #toJson(temp_list)
     return temp_list
-
+'''
 def ou_parsing():
     temp_dict = {}
     temp_list = []
 
     for page in range(1,8):
         fullurl = 'http://www.todayhumor.co.kr/board/list.php?table=humorbest&page={}'.format(page)
-        url = urllib.request.Request(fullurl, headers={'User-Agent': 'Mozilla/5.0'})
+        url = urllib.request.Request(fullurl, headers={'user-agent' : 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36', 'Accept-Charset': 'utf-8'})
         html = urlopen(url)
         source = html.read()
         html.close()
@@ -98,12 +98,12 @@ def ou_parsing():
             temp_list.append(temp_dict)
     #toJson(temp_list)
     return temp_list
-
+'''
 if __name__=='__main__':
     parsed_data = []
     parsed_data = ygosu_parsing()
-    parsed_data1 = ou_parsing()
-    parsed_data.extend(parsed_data1)
+    #parsed_data1 = ou_parsing()
+    #parsed_data.extend(parsed_data1)
     toJson(parsed_data)
 
     for i in range(len(parsed_data)):
