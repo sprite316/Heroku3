@@ -3,8 +3,8 @@ from django.db import models
 # Create your models here.
 
 class Candidate(models.Model):
-    name = models.CharField(max_length=10)
-    introduction = models.TextField()
+    name = models.TextField(null=True)
+    introduction = models.TextField(null=True)
     area = models.TextField(null=True)
     party_number = models.TextField(null=True)
 
