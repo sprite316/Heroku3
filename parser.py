@@ -1,4 +1,5 @@
 import os
+import urllib
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 import django
 django.setup()
@@ -44,7 +45,8 @@ def ou_parsing():
     temp_list = []
 
     for page in range(1,8):
-        url = 'http://www.todayhumor.co.kr/board/list.php?table=humorbest&page={}'.format(page)
+        fullurl = 'http://www.todayhumor.co.kr/board/list.php?table=humorbest&page={}'.format(page)
+        url = urllib.request.Request(fullurl, headers={'User-Agent': 'Mozilla/5.0'})
         html = urlopen(url)
         source = html.read()
         html.close()
@@ -56,7 +58,7 @@ def ou_parsing():
         days = table.find_all(class_="date")
         for tit, count, day in zip(tits, counts, days):
             title = tit.a.get_text()
-            link = tit.a.get('href')
+            link = 'http://www.todayhumor.co.kr'+tit.a.get('href')
             read = count.get_text()
             date = day.get_text()
             temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
@@ -67,8 +69,9 @@ def ou_parsing():
 if __name__=='__main__':
     parsed_data = []
     parsed_data = ygosu_parsing()
-    parsed_data = ou_parsing()
-    parsed_data.extend(parsed_data)
+    parsed_data1 = ou_parsing()
+    parsed_data.extend(parsed_data1)
+    toJson(parsed_data)
 
     for i in range(len(parsed_data)):
         new_candidate = Candidate(name=parsed_data[i]["day"],
