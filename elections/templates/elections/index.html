@@ -8,6 +8,17 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
+
+<script type="text/javascript" language="JavaScript">
+           var mobileKeyWords = new Array('iPhone', 'iPod', 'BlackBerry', 'Android', 'Windows CE', 'Windows CE;', 'LG', 'MOT', 'SAMSUNG', 'SonyEricsson', 'Mobile', 'Symbian', 'Opera Mobi', 'Opera Mini', 'IEmobile');
+           for (var word in mobileKeyWords){
+               if (navigator.userAgent.match(mobileKeyWords[word]) != null){
+                         window.location.href = "http://helloitstory.tistory.com/";
+                   break;
+                     }
+           }
+</script>
+
 <body>
 <div class="container">
     <table class="table table-striped">
