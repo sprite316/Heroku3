@@ -675,13 +675,6 @@
           <div id="home_popular" class="cafe_popular">
             <div class="wrap_tit">
               <h3 class="tit_item">실시간 인기글</h3>
-              <div class="box_util">
-                <span class="txt_date">
-                  <span class="screen_out">날짜</span>
-                  2019.11.XX.
-                  <em><span class="screen_out">시간</span>XX:XX</em>
-                </span>
-              </div>
             </div>
             <ol class="list_popular">
               {% for candidate in candidates %}
@@ -692,7 +685,7 @@
                       <img src="{{candidate.image}}" class="img_thumb" alt class="img_thumb">
                     </div>
                     <div class="wrap_info">
-                    <p class="desc_info">{{candidate.title}}</p>
+                    <p class>{{candidate.title}}</p>
                     </div>
                   </div>
                 </a>
