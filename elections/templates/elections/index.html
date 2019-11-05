@@ -677,20 +677,34 @@
               <h3 class="tit_item">실시간 인기글</h3>
             </div>
             <ol class="list_popular">
-              {% for candidate in candidates %}
+              {% for candidate in posts %}
               <li>
                 <a href={{candidate.link}} target="_blank" class="link_popular">
-                  <!--<div class="wrap_info">
-                      <p class>{{candidate.title}}</p>
-                  </div>-->
                   <p class>{{candidate.title}}</p>
                 </a>
               </li>
               {% endfor %}
             </ol>
+            <center>
+              {% if posts.has_previous %}
+              <a href="?page=1">처음</a>
+              <a href="?page={{posts.previous_page_number}}">이전</a>
+              {% endif %}
+              <span>{{posts.number}}</span>
+              <span>of</span>
+              <span>{{posts.paginator.num_pages}}</span>
+              {# Next Last #}
+              {% if posts.has_next %}
+              <a href="?page={{posts.next_page_number}}">다음</a>
+              <a href="?page={{posts.paginator.num_pages}}">마지막</a>
+              {%endif%}
+            </center>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+
+
 </body>
