@@ -680,15 +680,10 @@
               {% for candidate in candidates %}
               <li>
                 <a href={{candidate.link}} target="_blank" class="link_popular">
-                  <div class="thumb_info_type">
-                    <div class="wrap_thumb">
-                      <!--<img src="{{candidate.image}}" alt class="img_thumb">-->
-                      <img src="{{candidate.image}}" width="104" height="72" alt>
-                    </div>
-                    <div class="wrap_info">
+                  <!--<div class="wrap_info">
                       <p class>{{candidate.title}}</p>
-                    </div>
-                  </div>
+                  </div>-->
+                  <p class>{{candidate.title}}</p>
                 </a>
               </li>
               {% endfor %}
