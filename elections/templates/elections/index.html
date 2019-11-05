@@ -670,7 +670,7 @@
 <body>
   <div id="daumContent" role="main">
     <div id="cMain">
-      <div class="cafe_newbody">
+      <div>
         <div id="mArticle">
           <div id="home_popular" class="cafe_popular">
             <div class="wrap_tit">
@@ -685,7 +685,7 @@
               </li>
               {% endfor %}
             </ol>
-            <center>
+            <div style="text-align:center;">
               {% if posts.has_previous %}
               <a href="?page=1">처음</a>
               <a href="?page={{posts.previous_page_number}}">이전</a>
@@ -698,7 +698,7 @@
               <a href="?page={{posts.next_page_number}}">다음</a>
               <a href="?page={{posts.paginator.num_pages}}">마지막</a>
               {%endif%}
-            </center>
+            </div>
           </div>
         </div>
       </div>
