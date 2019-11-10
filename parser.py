@@ -107,7 +107,24 @@ def ou_parsing():
     #toJson(temp_list)
     return temp_list
 
+if __name__=='__main__':
+    Candidate.objects.all().delete()
+    parsed_data = []
+    parsed_data = ygosu_parsing()
+    #parsed_data1 = ou_parsing()
+    #parsed_data.extend(parsed_data1)
+    toJson(parsed_data)
 
+    for i in range(len(parsed_data)):
+        new_candidate = Candidate(date=parsed_data[i]["day"],
+        title=parsed_data[i]["title"],
+        count=parsed_data[i]["count"],
+        link=parsed_data[i]["link"]
+        #image=parsed_data[i]["image"]
+                              )
+        new_candidate.save()
+
+'''
 def job():
     if __name__=='__main__':
         #Candidate.objects.all().delete()
@@ -126,8 +143,9 @@ def job():
                                   )
             new_candidate.save()
 
-schedule.every(20).seconds.do(job)
+schedule.every(10).seconds.do(job)
 while True:
     schedule.run_pending()
     print('running')
     time.sleep(1)
+'''
