@@ -10,7 +10,7 @@ import json
 import schedule
 import time
 from elections.models import Candidate
-Candidate.objects.all().delete()
+
 
 def toJson(mnet_dict):
     with open('title_link.json', 'w', encoding='utf-8') as file:
@@ -110,6 +110,7 @@ def ou_parsing():
 
 def job():
     if __name__=='__main__':
+        Candidate.objects.all().delete()
         parsed_data = []
         parsed_data = ygosu_parsing()
         parsed_data1 = ou_parsing()
