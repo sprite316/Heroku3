@@ -129,9 +129,5 @@ def job():
 schedule.every(20).seconds.do(job)
 while True:
     schedule.run_pending()
+    print('running')
     time.sleep(1)
-
-
-
-
-
