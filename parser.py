@@ -110,7 +110,7 @@ def ou_parsing():
 
 def job():
     if __name__=='__main__':
-        Candidate.objects.all().delete()
+        #Candidate.objects.all().delete()
         parsed_data = []
         parsed_data = ygosu_parsing()
         parsed_data1 = ou_parsing()
