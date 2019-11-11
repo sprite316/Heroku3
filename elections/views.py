@@ -33,7 +33,24 @@ def mobileBrowser(request):
 
 def index(request):
     '''Render the index page'''
-    candidates = Candidate.objects.all()
+    candidates = Candidate.objects.all().order_by('count')[0:10]
+    #candidate_list = Candidate.objects.all()
+    #paginator = Paginator(candidate_list, 20)
+    #page = request.GET.get('page')
+    
+
+    if mobileBrowser(request):
+        return render(request, 'elections/m_index.html', {
+        'candidates':candidates
+        })
+    else:
+        return render(request, 'elections/index.html', {
+        'candidates':candidates
+        })
+
+def index111(request):
+    '''Render the index page'''
+    candidates = Candidate.objects.all().order_by('count')[0:10]
     candidate_list = Candidate.objects.all()
     paginator = Paginator(candidate_list, 20)
     page = request.GET.get('page')
