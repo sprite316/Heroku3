@@ -31,8 +31,46 @@ def mobileBrowser(request):
                 mobile_browser = True
                 return mobile_browser
 
+
+
+
+
 def index(request):
-    '''Render the index page'''
+    candidates = Candidate.objects.all()
+
+    candidate_list = Candidate.objects.all()
+    paginator = Paginator(candidate_list, 20)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+
+	# [2]
+    page_numbers_range = 10
+
+    # [3]
+    max_index = len(paginator.page_range)
+    current_page = int(page) if page else 1
+    start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+    end_index = start_index + page_numbers_range
+
+    # [4]
+    if end_index >= max_index:
+        end_index = max_index
+    paginator_range = paginator.page_range[start_index:end_index]
+
+    return render(request, 'elections/index.html', {
+    'candidates':candidates, 'posts':posts, 'paginator_range': paginator_range
+    })
+
+
+
+
+
+
+
+
+
+'''
+def index(request):
     candidates = Candidate.objects.all().order_by('-count')[0:10]
     #candidate_list = Candidate.objects.all()
     #paginator = Paginator(candidate_list, 20)
@@ -47,20 +85,4 @@ def index(request):
         return render(request, 'elections/index.html', {
         'candidates':candidates
         })
-
-def index111(request):
-    '''Render the index page'''
-    candidates = Candidate.objects.all().order_by('-count')[0:10]
-    candidate_list = Candidate.objects.all()
-    paginator = Paginator(candidate_list, 20)
-    page = request.GET.get('page')
-    posts = paginator.get_page(page)
-
-    if mobileBrowser(request):
-        return render(request, 'elections/m_index.html', {
-        'candidates':candidates, 'posts':posts
-        })
-    else:
-        return render(request, 'elections/index.html', {
-        'candidates':candidates, 'posts':posts
-        })
+'''
