@@ -44,7 +44,7 @@ def index(request):
     posts = paginator.get_page(page)
 
 	# [2]
-    page_numbers_range = 10
+    page_numbers_range = 6
 
     # [3]
     max_index = len(paginator.page_range)
