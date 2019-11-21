@@ -14,27 +14,10 @@ import time
 import requests
 from elections.models import Candidate
 
-import selenium.webdriver as webdriver
-from selenium.webdriver.chrome.options import Options
-from fake_useragent import UserAgent
-
-
 
 session = requests.Session()
 #headers = {'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 KAKAOTALK 8.6.2'}
-#headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36'}
-#headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko'}
-ua = UserAgent(verify_ssl=False)
-userAgent = ua.random
-headers = {'User-Agent' : userAgent}
-
-from selenium import webdriver
-
-driver = webdriver.Chrome('C:\Work\Heroku3\chromedriver.exe')
-driver.implicitly_wait(3)
-# url에 접근한다.
-#driver.get('https://google.com')
-
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36'}
 
 def toJson(mnet_dict):
     with open('title_link.json', 'w', encoding='utf-8') as file:
@@ -45,7 +28,7 @@ def ygosu_parsing():
     temp_dict = {}
     temp_list = []
 
-    for page in range(1, 2):
+    for page in range(1, 8):
         url = 'https://www.ygosu.com/community/real_article?page={}' 'developers/what-http-headers-is-my-browser-sending'.format(
             page)
         req = requests.get(url, headers=headers)
@@ -92,10 +75,9 @@ def ou_parsing():
 
     for page in range(1, 2):
         url = 'http://www.todayhumor.co.kr/board/list.php?table=humorbest&page={}'.format(page)
-        #req = requests.get(url, headers=headers)
-        html = driver.get(url)
+        req = requests.get(url, headers=headers)
         time.sleep(10)
-        #html = req.text
+        html = req.text
         time.sleep(10)
         soup = BS(html, "html.parser")
         print(soup)
