@@ -28,7 +28,7 @@ def ygosu_parsing():
     temp_dict = {}
     temp_list = []
 
-    for page in range(1, 8):
+    for page in range(1, 2):
         url = 'https://www.ygosu.com/community/real_article?page={}' 'developers/what-http-headers-is-my-browser-sending'.format(
             page)
         req = requests.get(url, headers=headers)
