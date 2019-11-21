@@ -32,9 +32,9 @@
               <li>
                 <a href={{candidate.link}} target="_blank" class="link_popular">
                   <div class="thumb_info_type">
-                    <div class="wrap_thumb">
+                    <!--<div class="wrap_thumb">
                       <img src="{{candidate.image}}" width="104" height="72" alt>
-                    </div>
+                    </div>-->
                     <div class="wrap_info">
                       <p class>{{candidate.title}}</p>
                     </div>
@@ -81,22 +81,6 @@
                 {% endif %}
               </ul>
             </div>
-
-
-            <!--<div style="text-align:center;">
-              {% if posts.has_previous %}
-              <a href="?page=1">처음</a>
-              <a href="?page={{posts.previous_page_number}}">이전</a>
-              {% endif %}
-              <span>{{posts.number}}</span>
-              <span>of</span>
-              <span>{{posts.paginator.num_pages}}</span>
-              {# Next Last #}
-              {% if posts.has_next %}
-              <a href="?page={{posts.next_page_number}}">다음</a>
-              <a href="?page={{posts.paginator.num_pages}}">마지막</a>
-              {%endif%}
-            </div>-->
           </div>
         </div>
       </div>
