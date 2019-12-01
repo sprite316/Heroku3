@@ -1,8 +1,9 @@
 import os
 import urllib
-
+import datetime
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 import django
+from operator import itemgetter
 
 django.setup()
 
@@ -38,10 +39,11 @@ def ygosu_parsing():
         tits = table.find_all(class_="tit")
         counts = table.find_all(class_="read")
         days = table.find_all(class_="date")
+
         for tit, count, day in zip(tits, counts, days):
             title = tit.a.get_text()
             link = tit.a.get('href')
-
+            '''
             ##image
             req = session.get(link, headers=headers)
             soup = BS(req.text, "html.parser")
@@ -58,12 +60,15 @@ def ygosu_parsing():
                     image = imgtag.get('src')
                 else:
                     image = 'none'
-
-                read = count.get_text()
-                date = day.get_text()
-                temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'image': image}
-                # temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
-                temp_list.append(temp_dict)
+            '''
+            read = count.get_text()
+            date_p = day.get_text()
+            #date_p = str(datetime.datetime.strptime(date_p, "%H:%M:%S"))
+            date = str(datetime.datetime.now().year) + "-" + str('%02d'%datetime.datetime.now().month) + "-" + str(
+                '%02d'%datetime.datetime.now().day) + " " + date_p
+            #temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'image': image}
+            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
+            temp_list.append(temp_dict)
 
     # toJson(temp_list)
     return temp_list
@@ -80,7 +85,7 @@ def ou_parsing():
         html = req.text
         time.sleep(10)
         soup = BS(html, "html.parser")
-        print(soup)
+        
         table = soup.find(class_="table_list")
         tits = table.find_all(class_="subject")
         counts = table.find_all(class_="hits")
@@ -89,7 +94,7 @@ def ou_parsing():
 
             title = tit.a.get_text()
             link = 'http://www.todayhumor.co.kr' + tit.a.get('href')
-
+            '''
             # image
             req = session.get(link, headers=headers)
             soup = BS(req.text, "html.parser")
@@ -103,12 +108,14 @@ def ou_parsing():
                     image = imgtag.get('src')
                 else:
                     image = 'none'
+                    '''
 
-                read = count.get_text()
-                date = day.get_text()
-                temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'image': image}
-                # temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
-                temp_list.append(temp_dict)
+            read = count.get_text()
+            date_p = day.get_text()
+            date = str(datetime.datetime.strptime(date_p, "%y/%m/%d %H:%M"))
+            #temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'image': image}
+            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
+            temp_list.append(temp_dict)
     # toJson(temp_list)
     return temp_list
 
@@ -117,15 +124,16 @@ if __name__ == '__main__':
     Candidate.objects.all().delete()
     parsed_data = []
     parsed_data = ygosu_parsing()
-    #parsed_data1 = ou_parsing()
-    #parsed_data.extend(parsed_data1)
+    parsed_data1 = ou_parsing()
+    parsed_data.extend(parsed_data1)
+    parsed_data = sorted(parsed_data, key=itemgetter('day'), reverse=1)
     toJson(parsed_data)
 
     for i in range(len(parsed_data)):
         new_candidate = Candidate(date=parsed_data[i]["day"],
                                   title=parsed_data[i]["title"],
                                   count=parsed_data[i]["count"],
-                                  link=parsed_data[i]["link"],
-                                  image=parsed_data[i]["image"]
+                                  link=parsed_data[i]["link"]
+                                  #image=parsed_data[i]["image"]
                                   )
         new_candidate.save()
