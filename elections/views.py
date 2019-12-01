@@ -57,6 +57,11 @@ def index(request):
         end_index = max_index
     paginator_range = paginator.page_range[start_index:end_index]
 
+    return render(request, 'elections/index.html', {
+    'candidates':candidates, 'posts':posts, 'paginator_range': paginator_range
+    })
+
+'''
     if mobileBrowser(request):
         return render(request, 'elections/m_index.html', {
         'candidates':candidates, 'posts':posts, 'paginator_range': paginator_range
@@ -65,9 +70,8 @@ def index(request):
         return render(request, 'elections/index.html', {
         'candidates':candidates, 'posts':posts, 'paginator_range': paginator_range
         })
-    #return render(request, 'elections/index.html', {
-    #'candidates':candidates, 'posts':posts, 'paginator_range': paginator_range
-    #})
+'''
+
 
 
 
