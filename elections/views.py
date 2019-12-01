@@ -37,7 +37,7 @@ def mobileBrowser(request):
 
 def index(request):
     candidates = Candidate.objects.all()
-	candidate_list = Candidate.objects.all()
+    candidate_list = Candidate.objects.all()
     paginator = Paginator(candidate_list, 20)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
