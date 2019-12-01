@@ -85,7 +85,7 @@ def ou_parsing():
         html = req.text
         time.sleep(10)
         soup = BS(html, "html.parser")
-        
+
         table = soup.find(class_="table_list")
         tits = table.find_all(class_="subject")
         counts = table.find_all(class_="hits")

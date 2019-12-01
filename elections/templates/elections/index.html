@@ -24,7 +24,7 @@
               <h3 class="tit_item">실시간 인기글</h3>
             </div>
             <ol class="list_popular">
-              {% for candidate in posts %}
+              {% for candidate in candidates %}
               <li>
                 <a href={{candidate.link}} class="link_popular">
                   <div class="thumb_info_type">
@@ -40,44 +40,6 @@
               </li>
               {% endfor %}
             </ol>
-
-            <div style="text-align:center;">
-              <ul class="pagination justify-content-center">
-                <!-- 이전 페이지 -->
-                {% if posts.has_previous %}
-                <li class="page-item">
-                  <a href="?page=1" class="page-link">&laquo;</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="?page={{ posts.previous_page_number }}" tabindex="-1">&lt;
-                  </a>
-                </li>
-                {% endif %}
-                <!-- 페이지 범위 및 현재 페이지 -->
-                {% for page in paginator_range %}
-                {% if posts.number == page %}
-                <li class="page-item active">
-                  <span class="page-link">{{ page }}
-                    <span class="sr-only">(current)</span>
-                  </span>
-                </li>
-                {% else %}
-                <li class="page-item">
-                  <a class="page-link" href="?page={{ page }}">{{ page }}</a>
-                </li>
-                {% endif %}
-                {% endfor %}
-                <!-- 다음 페이지 -->
-                {% if posts.has_next %}
-                <li class="page-item">
-                  <a class="page-link" href="?page={{ posts.next_page_number }}">&gt;</a>
-                </li>
-                <li class="page-item">
-                  <a href="?page={{ posts.paginator.num_pages }}" class="page-link">&raquo;</a>
-                </li>
-                {% endif %}
-              </ul>
-            </div>
           </div>
         </div>
       </div>

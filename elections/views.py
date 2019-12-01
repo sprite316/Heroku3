@@ -38,7 +38,7 @@ def mobileBrowser(request):
 def index(request):
     candidates = Candidate.objects.all()
     candidate_list = Candidate.objects.all()
-    paginator = Paginator(candidate_list, 20)
+    '''paginator = Paginator(candidate_list, 20)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
 
@@ -55,9 +55,9 @@ def index(request):
     if end_index >= max_index:
         end_index = max_index
     paginator_range = paginator.page_range[start_index:end_index]
-
+'''
     return render(request, 'elections/index.html', {
-    'candidates':candidates, 'posts':posts, 'paginator_range': paginator_range
+    'candidates':candidates
     })
 
 '''
