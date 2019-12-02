@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'elections',
+    'hoobang',
+    'list'
 ]
 
 MIDDLEWARE = [

@@ -19,6 +19,8 @@ from django.urls import path
 from django.conf.urls import url,include
 
 urlpatterns = [
-    path('', include('elections.urls')),
+    path('', include('list.urls')),
+    path('elections/', include('elections.urls')),
+    path('hoobang/', include('hoobang.urls')),
     path('admin/', admin.site.urls),
 ]

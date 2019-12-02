@@ -1,0 +1,48 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>맛자랑</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/static/css/style-db8ba5b9e5.min.css" type="text/css">
+  <script type="text/javascript" src="http://s1.daumcdn.net/svc/original/U03/cssjs/jquery/jquery-1.10.2.min.js"></script>
+</head>
+
+
+<body>
+  <div id="daumContent" role="main">
+    <div id="cMain">
+      <div>
+        <div id="mArticle">
+          <div id="home_popular" class="cafe_popular">
+            <div class="wrap_tit">
+              <h3 class="tit_item">후방주의 인기글</h3>
+            </div>
+            <ol class="list_popular">
+              {% for hoobang in hoobangs %}
+              <li>
+                <a href={{hoobang.link}} class="link_popular">
+                  <div class="thumb_info_type">
+                    <!--<div class="wrap_thumb">
+                      <img src="{{candidate.image}}" width="104" height="72" alt>
+                    </div>-->
+                    <div class="wrap_info">
+                      <p class>{{hoobang.title}}</p>
+                    </div>
+                  </div>
+                </a>
+                {{hoobang.date}}
+              </li>
+              {% endfor %}
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
