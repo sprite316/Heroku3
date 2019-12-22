@@ -19,8 +19,8 @@ from hoobang.models import hoobang
 
 session = requests.Session()
 #headers = {'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 KAKAOTALK 8.6.2'}
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36'}
-#headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763'}
+#headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36'}
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763'}
 
 
 def toJson(mnet_dict):
@@ -228,7 +228,8 @@ def clien_parsing():
     for page in range(0, 1):
         url = 'https://www.clien.net/service/group/clien_all?&od=T33&po={}'.format(
             page)
-        req = requests.get(url, headers=headers)
+        #req = requests.get(url, headers=headers)
+        req = requests.get(url)
         html = req.text
         soup = BS(html, "html.parser")
         #print(soup)
