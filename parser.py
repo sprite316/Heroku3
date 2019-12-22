@@ -232,7 +232,8 @@ def clien_parsing():
         req = requests.get(url, headers=headers)
         html = req.text
         soup = BS(html, "html.parser")
-        print(soup)
+        #print(soup)
+        time.sleep(3)
         table = soup.find(class_="list_content")
         links = table.find_all(class_="list_subject")
         tits = table.find_all(class_="subject_fixed")
@@ -249,7 +250,7 @@ def clien_parsing():
             temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
             temp_list.append(temp_dict)
 
-    # toJson(temp_list)
+    #toJson(temp_list)
     return temp_list
 
 
