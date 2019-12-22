@@ -232,6 +232,7 @@ def clien_parsing():
         req = requests.get(url, headers=headers)
         html = req.text
         soup = BS(html, "html.parser")
+        print(soup)
         table = soup.find(class_="list_content")
         links = table.find_all(class_="list_subject")
         tits = table.find_all(class_="subject_fixed")
