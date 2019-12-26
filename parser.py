@@ -1,6 +1,8 @@
 import os
-import urllib
 import datetime
+
+import urllib
+import urllib3
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 import django
@@ -18,10 +20,12 @@ from elections.models import Candidate
 from hoobang.models import hoobang
 
 session = requests.Session()
-#headers = {'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 KAKAOTALK 8.6.2'}
-#headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36'}
-#headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763'}
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763'}
+# headers = {'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 KAKAOTALK 8.6.2'}
+# headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36'}
+# headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763'}
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763'}
+
 
 def toJson(mnet_dict):
     with open('title_link.json', 'w', encoding='utf-8') as file:
@@ -128,6 +132,8 @@ def ou_parsing():
 
 
 ''' SLR 클럽 '''
+
+
 def SLR_parsing():
     temp_dict = {}
     temp_list = []
@@ -217,7 +223,6 @@ def SLR_parsing():
     return temp_list
 
 
-
 ''' 클리앙 '''
 
 
@@ -226,16 +231,37 @@ def clien_parsing():
     temp_list = []
 
     for page in range(0, 1):
-        url = 'https://www.clien.net/service/group/clien_all?&od=T33&po={}'.format(
-            page)
+        with requests.Session() as s:
+            url = 'https://www.clien.net/service/group/clien_all?&od=T33&po={}'.format(
+                page)
 
-        time.sleep(5)
-        #req = requests.get(url, headers=headers)
-        #cookies = {'session_id': 'CDNSEC=e19a50f57ff50fc4b8485dd88ef59115'}
-        req = requests.get(url, headers=headers)
-        time.sleep(5)
+        # req = requests.get(url, headers=headers)
+
+        # allow_redirects 옵션을 false로 변경하여 Redirect 방지
+
+        res = s.post(url, verify=False, allow_redirects=False)
+
+        # Set-Cookie시 아래 줄과 같이 세션을 가지고 오는데 세션만 뽑아내기 위해 36번 문자열 전 까지 잘라낸다 [:36]
+
+        # 36자 전까지 자른 길이는 웹사이트마다 약간 차이가 있음
+
+        # "PHPSESSID=ma9e4hq22nl41vki8oqrn2btf1; path=/; domain=abc.co.kr"
+
+        cookie = res.headers['Set-Cookie'][:36]
+
+        # 세션 수립 후 redirect 된 주소 가져오기
+
+        redirected_url = res.headers['Location']
+
+        # cookie 세션값 Cookie 변수에 저장
+
+        headers = {"Cookie": cookie}
+
+        # Redirct 된 주소로 요청
+
+        req = s.get(redirected_url, headers=headers)
+
         html = req.text
-        time.sleep(5)
         soup = BS(html, "html.parser")
         print(soup)
         time.sleep(3)
@@ -255,7 +281,7 @@ def clien_parsing():
             temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
             temp_list.append(temp_dict)
 
-    #toJson(temp_list)
+    # toJson(temp_list)
     return temp_list
 
 
