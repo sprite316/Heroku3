@@ -229,7 +229,8 @@ def clien_parsing():
         url = 'https://www.clien.net/service/group/clien_all?&od=T33&po={}'.format(
             page)
         #req = requests.get(url, headers=headers)
-        req = requests.get(url)
+        cookies = {'session_id': 'cookie-value'}
+        req = requests.get(url, cookies=cookies)
         html = req.text
         soup = BS(html, "html.parser")
         print(soup)
