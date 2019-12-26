@@ -231,9 +231,10 @@ def clien_parsing():
 
         #req = requests.get(url, headers=headers)
         #cookies = {'session_id': 'CDNSEC=e19a50f57ff50fc4b8485dd88ef59115'}
-        cookies = dict(cookies_are='working')
-        req = requests.get(url, cookies=cookies)
-        html = req.text
+        #req = requests.get(url)
+        req = urllib.request.Request(url)
+        req = urllib.request.urlopen(req)
+        html = req
         soup = BS(html, "html.parser")
         print(soup)
         time.sleep(3)
