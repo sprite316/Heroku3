@@ -301,12 +301,12 @@ if __name__ == '__main__':
     parsed_data_ygosu = ygosu_parsing()
     parsed_data_ou = ou_parsing()
     parsed_data_slr = SLR_parsing()
-    parsed_data_clien = clien_parsing()
+    #parsed_data_clien = clien_parsing()
 
     parsed_data.extend(parsed_data_ygosu)
     parsed_data.extend(parsed_data_ou)
     parsed_data.extend(parsed_data_slr)
-    parsed_data.extend(parsed_data_clien)
+    #parsed_data.extend(parsed_data_clien)
 
     ''' 시간순 정렬 '''
     parsed_data = sorted(parsed_data, key=itemgetter('day'), reverse=1)
