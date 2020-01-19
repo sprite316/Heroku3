@@ -309,13 +309,13 @@ if __name__ == '__main__':
     Candidate.objects.all().delete()
     parsed_data = []
     parsed_data_ygosu = ygosu_parsing()
-    # parsed_data_ou = ou_parsing()
+    parsed_data_ou = ou_parsing()
     parsed_data_slr = SLR_parsing()
     # parsed_data_clien = clien_parsing()
     # parsed_data_ppomppu = ppomppu_parsing()
 
     parsed_data.extend(parsed_data_ygosu)
-    # parsed_data.extend(parsed_data_ou)
+    parsed_data.extend(parsed_data_ou)
     parsed_data.extend(parsed_data_slr)
     ##parsed_data.extend(parsed_data_clien)
     # parsed_data.extend(parsed_data_ppomppu)
