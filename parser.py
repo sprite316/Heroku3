@@ -145,7 +145,6 @@ def SLR_parsing():
     counts = soup.find_all(class_="list_click no_att")
     days = soup.find_all(class_="list_date no_att")
 
-
     for tit, count, day in zip(tits, counts, days):
         title = tit.a.get_text()
         link = 'http://www.slrclub.com/' + tit.a.get('href')
@@ -186,9 +185,9 @@ def SLR_parsing():
         temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
         temp_list.append(temp_dict)
 
-
     # toJson(temp_list)
     return temp_list
+
 
 ''' 클리앙 '''
 
@@ -222,6 +221,45 @@ def clien_parsing():
             read = count.get_text()
             date = day.get_text()
             # date = str(datetime.datetime.strptime(date_p, "%y/%m/%d %H:%M"))
+            # temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'image': image}
+            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
+            temp_list.append(temp_dict)
+
+    # toJson(temp_list)
+    return temp_list
+
+
+''' 뽐뿌 '''
+
+
+def ppomppu_parsing():
+    temp_dict = {}
+    temp_list = []
+
+    for page in range(1, 2):
+        url = 'http://www.ppomppu.co.kr/hot.php?id=&page={}'.format(
+            page)
+        req = requests.get(url, headers=headers)
+        html = req.text
+        soup = BS(html, "html.parser")
+        table = soup.find('tbody')
+        tits = table.find_all(align="left")
+        print(table)
+        # counts = 0
+        # links = table.find_all(class_="bbsList")
+        # days_p = table.find_all(class_="main_list_vote")
+        # days = table.find_all('span', attrs={'class': 'not_exist'})
+        # days = table.find_all(class_='board_date')
+
+        # for tit, count, day in zip(tits, counts, days):
+        for tit in zip(tits):
+            title = tit.get_text()
+            link = 'http://www.ppomppu.co.kr/' + link.a.get('href')
+            read = 0
+            date_p = tit.find(class_='board_date').get_text()
+            # date_p = str(datetime.datetime.strptime(date_p, "%H:%M:%S"))
+            date = str(datetime.datetime.now().year) + "-" + str('%02d' % datetime.datetime.now().month) + "-" + str(
+                '%02d' % datetime.datetime.now().day) + " " + date_p
             # temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'image': image}
             temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
             temp_list.append(temp_dict)
@@ -271,41 +309,86 @@ if __name__ == '__main__':
     Candidate.objects.all().delete()
     parsed_data = []
     parsed_data_ygosu = ygosu_parsing()
-    parsed_data_ou = ou_parsing()
+    # parsed_data_ou = ou_parsing()
     parsed_data_slr = SLR_parsing()
     # parsed_data_clien = clien_parsing()
+    # parsed_data_ppomppu = ppomppu_parsing()
 
     parsed_data.extend(parsed_data_ygosu)
-    parsed_data.extend(parsed_data_ou)
+    # parsed_data.extend(parsed_data_ou)
     parsed_data.extend(parsed_data_slr)
-    # parsed_data.extend(parsed_data_clien)
+    ##parsed_data.extend(parsed_data_clien)
+    # parsed_data.extend(parsed_data_ppomppu)
+
+    ''' json 읽기 '''
+    file_path = "./title_link.json"
+    json_data = {}
+    with open(file_path, 'rt', encoding='UTF8') as json_file:
+        json_data = json.load(json_file)
+
+    ''' 이전 파싱 데이터와 비교  이전에 없으면 append '''
+    json_data_len = len(json_data)
+    parsed_data_len = len(parsed_data)
+    flag = 0
+    for k in range(0, parsed_data_len):
+        for j in range(0, json_data_len):
+            if parsed_data[k]['link'] in json_data[j]['link']:
+                flag = 1
+        if flag == 0:
+            json_data.append(parsed_data[k])
+        else:
+            flag = 0
 
     ''' 시간순 정렬 '''
-    parsed_data = sorted(parsed_data, key=itemgetter('day'), reverse=1)
-    toJson(parsed_data)
+    json_data = sorted(json_data, key=itemgetter('day'), reverse=1)
 
-    for i in range(len(parsed_data)):
-        new_candidate = Candidate(date=parsed_data[i]["day"],
-                                  title=parsed_data[i]["title"],
-                                  count=parsed_data[i]["count"],
-                                  link=parsed_data[i]["link"]
-                                  # image=parsed_data[i]["image"]
+    ''' 최종 out 저장 '''
+    toJson(json_data)
+
+    for i in range(len(json_data)):
+        new_candidate = Candidate(date=json_data[i]["day"],
+                                  title=json_data[i]["title"],
+                                  count=json_data[i]["count"],
+                                  link=json_data[i]["link"]
+                                  # image=json_data[i]["image"]
                                   )
         new_candidate.save()
 
-''' 카테고리'''
+    ''' 카테고리'''
 
-hoobang.objects.all().delete()
-parsed_data_hoobang = []
-parsed_data_hoobang = ygosu_hoobang_parsing()
-parsed_data_hoobang = sorted(parsed_data_hoobang, key=itemgetter('day'), reverse=1)
-toJson_hoobang(parsed_data_hoobang)
+    hoobang.objects.all().delete()
+    parsed_data_hoobang = []
+    parsed_data_hoobang = ygosu_hoobang_parsing()
+    parsed_data_hoobang = sorted(parsed_data_hoobang, key=itemgetter('day'), reverse=1)
 
-for i in range(len(parsed_data_hoobang)):
-    new_hoobang = hoobang(date=parsed_data_hoobang[i]["day"],
-                          title=parsed_data_hoobang[i]["title"],
-                          # count=parsed_data[i]["count"],
-                          link=parsed_data_hoobang[i]["link"]
-                          # image=parsed_data[i]["image"]
+    ''' json 읽기 '''
+    file_path_hoobang = "./title_link_hoobang.json"
+    json_data_hoobang = {}
+    with open(file_path_hoobang, 'rt', encoding='UTF8') as json_file_hoobang:
+        json_data_hoobang = json.load(json_file_hoobang)
+
+    ''' 이전 파싱 데이터와 비교  이전에 없으면 append '''
+    json_data_hoobang_len = len(json_data_hoobang)
+    parsed_data_hoobang_len = len(parsed_data_hoobang)
+    flag = 0
+    for k in range(0, parsed_data_hoobang_len):
+        for j in range(0, json_data_hoobang_len):
+            if parsed_data_hoobang[k]['link'] in json_data_hoobang[j]['link']:
+                flag = 1
+        if flag == 0:
+            json_data_hoobang.append(parsed_data_hoobang[k])
+        else:
+            flag = 0
+
+    ''' 최종 out 저장 '''
+    json_data_hoobang = sorted(json_data_hoobang, key=itemgetter('day'), reverse=1)
+    toJson_hoobang(json_data_hoobang)
+
+for i in range(len(json_data_hoobang)):
+    new_hoobang = hoobang(date=json_data_hoobang[i]["day"],
+                          title=json_data_hoobang[i]["title"],
+                          # count=json_data[i]["count"],
+                          link=json_data_hoobang[i]["link"]
+                          # image=json_data[i]["image"]
                           )
     new_hoobang.save()
