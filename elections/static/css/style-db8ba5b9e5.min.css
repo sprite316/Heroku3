@@ -6,12 +6,32 @@ blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4,
 
 }
 
-.right {
+
+
+
+.wrap_tit .tit_item {
+    display: block;
+    position: relative;
+    background-color: #98a5b3;
+    padding: 8px 0 7px 7px;
+    border-left: 10px solid #818480;
+    font-size: 11pt;
+    color: #fff;
+    margin: 0 0 1px;
+}
+
+.wrap_tit .right {
+    position: absolute;
+    right: 0;
+    top: 5px;
+}
+
+.wrap_tit .right a.more {
     display: inline-block;
+    position: relative;
     color: #fff;
     background-color: #7f8fa1;
-    text-align: right;
-    font-size: 8pt;
+    text-align: center;
     padding: 3px 5px 2px;
     cursor: pointer;
     margin: 0 5px 0 0;
@@ -984,6 +1004,7 @@ address, caption, cite, code, dfn, em, var {
     float: left
 }
 
+/*
 .wrap_tit {
     display: block;
     position: relative;
@@ -995,19 +1016,15 @@ address, caption, cite, code, dfn, em, var {
     margin: 0 0 1px;
 }
 
+
+ */
+
 .wrap_tit:after {
     display: block;
     width: 0;
     height: 0;
     clear: both;
     content: ""
-}
-
-.wrap_tit .tit_item {
-    float: left;
-    font-size: 20px;
-    font-weight: 700;
-    color: #333
 }
 
 .wrap_tit .txt_noraml {
