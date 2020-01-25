@@ -6,6 +6,18 @@ blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4,
 
 }
 
+.right {
+    display: inline-block;
+    color: #fff;
+    background-color: #7f8fa1;
+    text-align: right;
+    font-size: 8pt;
+    padding: 3px 5px 2px;
+    cursor: pointer;
+    margin: 0 5px 0 0;
+}
+
+
 fieldset, img {
     border: 0
 }
