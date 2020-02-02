@@ -229,9 +229,70 @@ def clien_parsing():
     return temp_list
 
 
+''' 보배드림 '''
+
+
+def bobae_parsing():
+    temp_dict = {}
+    temp_list = []
+
+    for page in range(1, 2):
+        url = 'https://www.bobaedream.co.kr/list?code=best&s_cate=&maker_no=&model_no=&or_gu=10&or_se=desc&s_selday=&pagescale=30&info3=&noticeShow=&s_select=&s_key=&level_no=&bestCode=&bestDays=&bestbbs=&vdate=&type=list&page={}'.format(
+            page)
+
+        req = requests.get(url, headers=headers, verify=False)
+        #time.sleep(10)
+        req.encoding = 'utf-8'
+        html = req.text
+        #time.sleep(10)
+        soup = BS(html, "html.parser")
+
+        table = soup.find(class_="clistTable02")
+        tits = table.find_all(class_="pl14")
+        counts = table.find_all(class_="count")
+        days = table.find_all(class_="date")
+        for tit, count, day in zip(tits, counts, days):
+            title = tit.a.get_text()
+            link = 'https://www.bobaedream.co.kr' + tit.a.get('href')
+            '''
+            # image
+            req = session.get(link, headers=headers)
+            soup = BS(req.text, "html.parser")
+            container = soup.find(class_='viewContent')
+            if container:
+                if container.find('video'):
+                    videotag = container.find('video')
+                    image = videotag.get('poster')
+                elif container.find('img'):
+                    imgtag = container.find('img')
+                    image = imgtag.get('src')
+                else:
+                    image = 'none'
+                    '''
+
+            read = count.get_text()
+            date_p = day.get_text()
+            date_p1 = day.get_text()
+            date_p = str(datetime.datetime.now().year) + "-" + str(
+                '%02d' % datetime.datetime.now().month) + "-" + str(
+                '%02d' % datetime.datetime.now().day) + " " + date_p
+            now = datetime.datetime.now()
+            yesterday = now - timedelta(1)
+            if (str(now) < date_p):
+                date = str(datetime.datetime.now().year) + "-" + str(
+                    '%02d' % yesterday.month) + "-" + str(
+                    '%02d' % yesterday.day) + " " + date_p1
+            else:
+                date = str(datetime.datetime.now().year) + "-" + str(
+                    '%02d' % datetime.datetime.now().month) + "-" + str(
+                    '%02d' % datetime.datetime.now().day) + " " + date_p1
+            # temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'image': image}
+            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
+            temp_list.append(temp_dict)
+    # toJson(temp_list)
+    return temp_list
+
 ''' 뽐뿌 '''
-
-
 def ppomppu_parsing():
     temp_dict = {}
     temp_list = []
@@ -239,12 +300,12 @@ def ppomppu_parsing():
     for page in range(1, 2):
         url = 'http://www.ppomppu.co.kr/hot.php?id=&page={}'.format(
             page)
-        req = requests.get(url, headers=headers)
+        req = requests.get(url, headers=headers, verify=False)
         html = req.text
         soup = BS(html, "html.parser")
-        table = soup.find('tbody')
-        tits = table.find_all(align="left")
-        print(table)
+        table = soup.find('table', class_='board_table')
+        lines = table.find_all('tr', class_='line')
+        # print(tits)
         # counts = 0
         # links = table.find_all(class_="bbsList")
         # days_p = table.find_all(class_="main_list_vote")
@@ -252,11 +313,12 @@ def ppomppu_parsing():
         # days = table.find_all(class_='board_date')
 
         # for tit, count, day in zip(tits, counts, days):
-        for tit in zip(tits):
-            title = tit.get_text()
-            link = 'http://www.ppomppu.co.kr/' + link.a.get('href')
+        for line in lines:
+            title_p = line.find_all('td', align="left")
+            title = title_p[1].a.get_text()
+            link = 'http://www.ppomppu.co.kr' + title_p[1].a.get('href')
             read = 0
-            date_p = tit.find(class_='board_date').get_text()
+            date_p = line.find(class_='board_date').get_text()
             # date_p = str(datetime.datetime.strptime(date_p, "%H:%M:%S"))
             date = str(datetime.datetime.now().year) + "-" + str('%02d' % datetime.datetime.now().month) + "-" + str(
                 '%02d' % datetime.datetime.now().day) + " " + date_p
@@ -312,13 +374,15 @@ if __name__ == '__main__':
     parsed_data_ou = ou_parsing()
     parsed_data_slr = SLR_parsing()
     # parsed_data_clien = clien_parsing()
-    # parsed_data_ppomppu = ppomppu_parsing()
+    parsed_data_ppomppu = ppomppu_parsing()
+    parsed_data_bobae = bobae_parsing()
 
     parsed_data.extend(parsed_data_ygosu)
     parsed_data.extend(parsed_data_ou)
     parsed_data.extend(parsed_data_slr)
-    ##parsed_data.extend(parsed_data_clien)
-    # parsed_data.extend(parsed_data_ppomppu)
+    #parsed_data.extend(parsed_data_clien)
+    parsed_data.extend(parsed_data_ppomppu)
+    parsed_data.extend(parsed_data_bobae)
 
     ''' json 읽기 '''
     file_path = "./title_link.json"
