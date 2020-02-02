@@ -200,15 +200,13 @@ def clien_parsing():
         url = 'https://www.clien.net/service/group/clien_all?&od=T33&po={}'.format(
             page)
 
-        # req = requests.get(url, headers=headers)
+        req = requests.get(url, headers=headers, verify=False)
         # cookies = {'session_id': 'CDNSEC=e19a50f57ff50fc4b8485dd88ef59115'}
         # req = requests.get(url)
-        req = urllib.request.Request(url)
-        req = urllib.request.urlopen(req)
-        html = req
+        #req = urllib.request.Request(url)
+        #req = urllib.request.urlopen(req)
+        html = req.text
         soup = BS(html, "html.parser")
-        print(soup)
-        time.sleep(3)
         table = soup.find(class_="list_content")
         links = table.find_all(class_="list_subject")
         tits = table.find_all(class_="subject_fixed")
@@ -373,14 +371,14 @@ if __name__ == '__main__':
     parsed_data_ygosu = ygosu_parsing()
     parsed_data_ou = ou_parsing()
     parsed_data_slr = SLR_parsing()
-    # parsed_data_clien = clien_parsing()
+    parsed_data_clien = clien_parsing()
     parsed_data_ppomppu = ppomppu_parsing()
     parsed_data_bobae = bobae_parsing()
 
     parsed_data.extend(parsed_data_ygosu)
     parsed_data.extend(parsed_data_ou)
     parsed_data.extend(parsed_data_slr)
-    #parsed_data.extend(parsed_data_clien)
+    parsed_data.extend(parsed_data_clien)
     parsed_data.extend(parsed_data_ppomppu)
     parsed_data.extend(parsed_data_bobae)
 
