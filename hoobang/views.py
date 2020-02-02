@@ -7,30 +7,27 @@ from django.core.paginator import Paginator
 
 # list of mobile User Agents
 mobile_uas = [
-	'w3c ','acs-','alav','alca','amoi','audi','avan','benq','bird','blac',
-	'blaz','brew','cell','cldc','cmd-','dang','doco','eric','hipt','inno',
-	'ipaq','java','jigs','kddi','keji','leno','lg-c','lg-d','lg-g','lge-',
-	'maui','maxo','midp','mits','mmef','mobi','mot-','moto','mwbp','nec-',
-	'newt','noki','oper','palm','pana','pant','phil','play','port','prox',
-	'qwap','sage','sams','sany','sch-','sec-','send','seri','sgh-','shar',
-	'sie-','siem','smal','smar','sony','sph-','symb','t-mo','teli','tim-',
-	'tosh','tsm-','upg1','upsi','vk-v','voda','wap-','wapa','wapi','wapp',
-	'wapr','webc','winw','winw','xda','xda-'
-	]
-mobile_ua_hints = [ 'SymbianOS', 'Opera Mini', 'iPhone' ]
-
-
-
+    'w3c ', 'acs-', 'alav', 'alca', 'amoi', 'audi', 'avan', 'benq', 'bird', 'blac',
+    'blaz', 'brew', 'cell', 'cldc', 'cmd-', 'dang', 'doco', 'eric', 'hipt', 'inno',
+    'ipaq', 'java', 'jigs', 'kddi', 'keji', 'leno', 'lg-c', 'lg-d', 'lg-g', 'lge-',
+    'maui', 'maxo', 'midp', 'mits', 'mmef', 'mobi', 'mot-', 'moto', 'mwbp', 'nec-',
+    'newt', 'noki', 'oper', 'palm', 'pana', 'pant', 'phil', 'play', 'port', 'prox',
+    'qwap', 'sage', 'sams', 'sany', 'sch-', 'sec-', 'send', 'seri', 'sgh-', 'shar',
+    'sie-', 'siem', 'smal', 'smar', 'sony', 'sph-', 'symb', 't-mo', 'teli', 'tim-',
+    'tosh', 'tsm-', 'upg1', 'upsi', 'vk-v', 'voda', 'wap-', 'wapa', 'wapi', 'wapp',
+    'wapr', 'webc', 'winw', 'winw', 'xda', 'xda-'
+]
+mobile_ua_hints = ['SymbianOS', 'Opera Mini', 'iPhone']
 
 
 def index(request):
     hoobangs = hoobang.objects.all()
     hoobang_list = hoobang.objects.all()
-    '''paginator = Paginator(candidate_list, 20)
+    paginator = Paginator(hoobang_list, 20)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
 
-	# [2]
+    # [2]
     page_numbers_range = 6
 
     # [3]
@@ -43,29 +40,10 @@ def index(request):
     if end_index >= max_index:
         end_index = max_index
     paginator_range = paginator.page_range[start_index:end_index]
-'''
+
     return render(request, 'hoobang/index.html', {
-    'hoobangs':hoobangs
+        'hoobangs': hoobangs, 'posts': posts, 'paginator_range': paginator_range
     })
-
-'''
-    if mobileBrowser(request):
-        return render(request, 'elections/m_index.html', {
-        'candidates':candidates, 'posts':posts, 'paginator_range': paginator_range
-        })
-    else:
-        return render(request, 'elections/index.html', {
-        'candidates':candidates, 'posts':posts, 'paginator_range': paginator_range
-        })
-'''
-
-
-
-
-
-
-
-
 
 
 '''
