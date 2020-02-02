@@ -147,3 +147,24 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
+
+#Log 파일 만들기 20.02.02
+LOGGING = {
+    'version':1,
+    'disable_existing_loggers': False,
+    'handlers' : {
+        'file' : {
+            'level' : 'DEBUG',
+            'class' : 'logging.FileHandler',
+            'filename' : 'debug.log',
+        },
+    },
+    'loggers' : {
+        'django' : {
+            'handlers' : ['file'],
+            'level' : 'DEBUG',
+            'propagate' : True,
+        },
+    }
+}
