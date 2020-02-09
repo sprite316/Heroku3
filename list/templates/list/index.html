@@ -16,15 +16,16 @@
 
 
 <body>
-<div style="white-space: nowrap">
+<div>
     <a href="http://djangoyoon3.herokuapp.com/"><img src="/static/img/logo.jpg" height="50"
                                                      style="vertical-align:text-bottom"></a>
-    <div style="font-weight:bold; font-size: 1.5em; text-align: right;">
+    <span style="font-weight:bold; font-size: 1.5em; text-align: right;">
+        &nbsp;&nbsp;
         <a href="http://djangoyoon3.herokuapp.com/elections/">실시간인기글</a>
         &nbsp; &nbsp;
         <a href="http://djangoyoon3.herokuapp.com/hoobang/">후방주의</a>
-        &nbsp; &nbsp;
-    </div>
+
+    </span>
 </div>
 
 <div id="daumContent" role="main">
@@ -36,7 +37,10 @@
                         <div class="tit_item">
                             <h3>실시간 Top 10</h3>
                             <div class="right">
-                                <a href="/elections"><i class="fa fa-plus"></i></a>
+                                <a href="/elections">
+                                    <span style="padding-right: 20px; color: Mediumslateblue;">
+                                    <i class="fa fa-plus"></i></span>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -62,7 +66,10 @@
                        <div class="tit_item">
                             <h3>후방주의 Top 10</h3>
                             <div class="right">
-                                <a href="/hoobang"><i class="fa fa-plus"></i></a>
+                                <a href="/hoobang">
+                                    <span style="padding-right: 20px; color: Mediumslateblue;">
+                                    <i class="fa fa-plus"></i></span>
+                                </a>
                             </div>
                         </div>
                     <ol class="list_popular">
