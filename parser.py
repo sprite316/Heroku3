@@ -366,7 +366,7 @@ def ygosu_hoobang_parsing():
 '''  실행 '''
 
 if __name__ == '__main__':
-    Candidate.objects.all().delete()
+    #Candidate.objects.all().delete()
     parsed_data = []
     parsed_data_ygosu = ygosu_parsing()
     parsed_data_ou = ou_parsing()
@@ -418,7 +418,7 @@ if __name__ == '__main__':
 
     ''' 카테고리'''
 
-    hoobang.objects.all().delete()
+    #hoobang.objects.all().delete()
     parsed_data_hoobang = []
     parsed_data_hoobang = ygosu_hoobang_parsing()
     parsed_data_hoobang = sorted(parsed_data_hoobang, key=itemgetter('day'), reverse=1)
