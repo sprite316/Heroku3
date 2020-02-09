@@ -366,7 +366,6 @@ def ygosu_hoobang_parsing():
 '''  실행 '''
 
 if __name__ == '__main__':
-    #Candidate.objects.all().delete()
     parsed_data = []
     parsed_data_ygosu = ygosu_parsing()
     parsed_data_ou = ou_parsing()
@@ -407,6 +406,7 @@ if __name__ == '__main__':
     ''' 최종 out 저장 '''
     toJson(json_data)
 
+    Candidate.objects.all().delete()
     for i in range(len(json_data)):
         new_candidate = Candidate(date=json_data[i]["day"],
                                   title=json_data[i]["title"],
@@ -418,7 +418,7 @@ if __name__ == '__main__':
 
     ''' 카테고리'''
 
-    #hoobang.objects.all().delete()
+
     parsed_data_hoobang = []
     parsed_data_hoobang = ygosu_hoobang_parsing()
     parsed_data_hoobang = sorted(parsed_data_hoobang, key=itemgetter('day'), reverse=1)
@@ -446,11 +446,12 @@ if __name__ == '__main__':
     json_data_hoobang = sorted(json_data_hoobang, key=itemgetter('day'), reverse=1)
     toJson_hoobang(json_data_hoobang)
 
-for i in range(len(json_data_hoobang)):
-    new_hoobang = hoobang(date=json_data_hoobang[i]["day"],
-                          title=json_data_hoobang[i]["title"],
-                          # count=json_data[i]["count"],
-                          link=json_data_hoobang[i]["link"]
-                          # image=json_data[i]["image"]
-                          )
-    new_hoobang.save()
+    hoobang.objects.all().delete()
+    for i in range(len(json_data_hoobang)):
+        new_hoobang = hoobang(date=json_data_hoobang[i]["day"],
+                              title=json_data_hoobang[i]["title"],
+                              # count=json_data[i]["count"],
+                              link=json_data_hoobang[i]["link"]
+                              # image=json_data[i]["image"]
+                              )
+        new_hoobang.save()
