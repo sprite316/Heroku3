@@ -406,7 +406,7 @@ if __name__ == '__main__':
     ''' 최종 out 저장 '''
     toJson(json_data)
 
-    Candidate.objects.all().delete()
+    #Candidate.objects.all().delete()
     for i in range(len(json_data)):
         new_candidate = Candidate(date=json_data[i]["day"],
                                   title=json_data[i]["title"],
@@ -446,7 +446,7 @@ if __name__ == '__main__':
     json_data_hoobang = sorted(json_data_hoobang, key=itemgetter('day'), reverse=1)
     toJson_hoobang(json_data_hoobang)
 
-    hoobang.objects.all().delete()
+    #hoobang.objects.all().delete()
     for i in range(len(json_data_hoobang)):
         new_hoobang = hoobang(date=json_data_hoobang[i]["day"],
                               title=json_data_hoobang[i]["title"],
