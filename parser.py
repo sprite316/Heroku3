@@ -363,6 +363,41 @@ def ygosu_hoobang_parsing():
     return temp_list
 
 
+def DB_json():
+    temp_dict = {}
+    temp_list = []
+
+    DB_data_all= Candidate.objects.all().values_list()
+
+    for kk in range(0, len(DB_data_all)):
+        title = Candidate.objects.all().values_list()[kk][2]
+        link = Candidate.objects.all().values_list()[kk][4]
+        date = Candidate.objects.all().values_list()[kk][1]
+        count = Candidate.objects.all().values_list()[kk][3]
+        temp_dict = {'day': date, 'title': title, 'link': link, 'count':count}
+        temp_list.append(temp_dict)
+
+    # toJson(temp_list)
+    return temp_list
+
+
+def DB_json_hoobang():
+    temp_dict = {}
+    temp_list = []
+
+    DB_data_all= hoobang.objects.all().values_list()
+
+    for kk in range(0, len(DB_data_all)):
+        title = hoobang.objects.all().values_list()[kk][2]
+        link = hoobang.objects.all().values_list()[kk][4]
+        date = hoobang.objects.all().values_list()[kk][1]
+        #count = hoobang.objects.all().values_list()[kk][3]
+        temp_dict = {'day': date, 'title': title, 'link': link}
+        temp_list.append(temp_dict)
+
+    # toJson(temp_list)
+    return temp_list
+
 '''  실행 '''
 
 if __name__ == '__main__':
@@ -381,12 +416,9 @@ if __name__ == '__main__':
     parsed_data.extend(parsed_data_ppomppu)
     parsed_data.extend(parsed_data_bobae)
 
-    ''' json 읽기 '''
-    file_path = "./title_link.json"
-    json_data = {}
-    with open(file_path, 'rt', encoding='UTF8') as json_file:
-        json_data = json.load(json_file)
 
+    ''' DB 읽기 '''
+    json_data = DB_json()
     ''' 이전 파싱 데이터와 비교  이전에 없으면 append '''
     json_data_len = len(json_data)
     parsed_data_len = len(parsed_data)
@@ -416,19 +448,18 @@ if __name__ == '__main__':
                                   )
         new_candidate.save()
 
-    ''' 카테고리'''
 
+
+
+
+    ''' 후방주의 '''
 
     parsed_data_hoobang = []
     parsed_data_hoobang = ygosu_hoobang_parsing()
     parsed_data_hoobang = sorted(parsed_data_hoobang, key=itemgetter('day'), reverse=1)
 
-    ''' json 읽기 '''
-    file_path_hoobang = "./title_link_hoobang.json"
-    json_data_hoobang = {}
-    with open(file_path_hoobang, 'rt', encoding='UTF8') as json_file_hoobang:
-        json_data_hoobang = json.load(json_file_hoobang)
-
+    ''' DB 읽기 '''
+    json_data_hoobang = DB_json_hoobang()
     ''' 이전 파싱 데이터와 비교  이전에 없으면 append '''
     json_data_hoobang_len = len(json_data_hoobang)
     parsed_data_hoobang_len = len(parsed_data_hoobang)
