@@ -78,7 +78,7 @@ def ygosu_parsing():
             date = str(datetime.datetime.now().year) + "-" + str('%02d' % datetime.datetime.now().month) + "-" + str(
                 '%02d' % datetime.datetime.now().day) + " " + date_p
             # temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'image': image}
-            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
+            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'source': '와고'}
             temp_list.append(temp_dict)
 
     # toJson(temp_list)
@@ -124,7 +124,7 @@ def ou_parsing():
             date_p = day.get_text()
             date = str(datetime.datetime.strptime(date_p, "%y/%m/%d %H:%M"))
             # temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'image': image}
-            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
+            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'source': '오유'}
             temp_list.append(temp_dict)
     # toJson(temp_list)
     return temp_list
@@ -182,7 +182,7 @@ def SLR_parsing():
             date = str(datetime.datetime.now().year) + "-" + str(
                 '%02d' % datetime.datetime.now().month) + "-" + str(
                 '%02d' % datetime.datetime.now().day) + " " + date_p1
-        temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
+        temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'source': 'SLR'}
         temp_list.append(temp_dict)
 
     # toJson(temp_list)
@@ -220,7 +220,7 @@ def clien_parsing():
             date = day.get_text()
             # date = str(datetime.datetime.strptime(date_p, "%y/%m/%d %H:%M"))
             # temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'image': image}
-            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
+            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'source': '클량'}
             temp_list.append(temp_dict)
 
     # toJson(temp_list)
@@ -285,7 +285,7 @@ def bobae_parsing():
                     '%02d' % datetime.datetime.now().month) + "-" + str(
                     '%02d' % datetime.datetime.now().day) + " " + date_p1
             # temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'image': image}
-            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
+            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'source': '보배'}
             temp_list.append(temp_dict)
     # toJson(temp_list)
     return temp_list
@@ -321,7 +321,7 @@ def ppomppu_parsing():
             date = str(datetime.datetime.now().year) + "-" + str('%02d' % datetime.datetime.now().month) + "-" + str(
                 '%02d' % datetime.datetime.now().day) + " " + date_p
             # temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'image': image}
-            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
+            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'source': '뽐뿌'}
             temp_list.append(temp_dict)
 
     # toJson(temp_list)
@@ -356,7 +356,7 @@ def ygosu_hoobang_parsing():
             #    '%02d'%datetime.datetime.now().day) + " " + date_p
             # temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'image': image}
             # temp_dict = {'day': date, 'title': title, 'count': read, 'link': link}
-            temp_dict = {'day': date, 'title': title, 'link': link}
+            temp_dict = {'day': date, 'title': title, 'link': link, 'source': '와고'}
             temp_list.append(temp_dict)
 
     # toJson(temp_list)
@@ -374,7 +374,8 @@ def DB_json():
         link = Candidate.objects.all().values_list()[kk][4]
         date = Candidate.objects.all().values_list()[kk][1]
         count = Candidate.objects.all().values_list()[kk][3]
-        temp_dict = {'day': date, 'title': title, 'link': link, 'count':count}
+        source = Candidate.objects.all().values_list()[kk][5]
+        temp_dict = {'day': date, 'title': title, 'link': link, 'count':count, 'source': source}
         temp_list.append(temp_dict)
 
     # toJson(temp_list)
@@ -392,7 +393,8 @@ def DB_json_hoobang():
         link = hoobang.objects.all().values_list()[kk][4]
         date = hoobang.objects.all().values_list()[kk][1]
         #count = hoobang.objects.all().values_list()[kk][3]
-        temp_dict = {'day': date, 'title': title, 'link': link}
+        source = hoobang.objects.all().values_list()[kk][5]
+        temp_dict = {'day': date, 'title': title, 'link': link, 'source': source}
         temp_list.append(temp_dict)
 
     # toJson(temp_list)
@@ -443,7 +445,8 @@ if __name__ == '__main__':
         new_candidate = Candidate(date=json_data[i]["day"],
                                   title=json_data[i]["title"],
                                   count=json_data[i]["count"],
-                                  link=json_data[i]["link"]
+                                  link=json_data[i]["link"],
+                                  source=json_data[i]["source"]
                                   # image=json_data[i]["image"]
                                   )
         new_candidate.save()
@@ -482,7 +485,8 @@ if __name__ == '__main__':
         new_hoobang = hoobang(date=json_data_hoobang[i]["day"],
                               title=json_data_hoobang[i]["title"],
                               # count=json_data[i]["count"],
-                              link=json_data_hoobang[i]["link"]
+                              link=json_data_hoobang[i]["link"],
                               # image=json_data[i]["image"]
+                              source=json_data_hoobang[i]["source"]
                               )
         new_hoobang.save()
