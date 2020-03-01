@@ -374,7 +374,7 @@ def DB_json():
         link = Candidate.objects.all().values_list()[kk][4]
         date = Candidate.objects.all().values_list()[kk][1]
         count = Candidate.objects.all().values_list()[kk][3]
-        source = Candidate.objects.all().values_list()[kk][5]
+        source = Candidate.objects.all().values_list()[kk][6]
         temp_dict = {'day': date, 'title': title, 'link': link, 'count':count, 'source': source}
         temp_list.append(temp_dict)
 
@@ -393,7 +393,7 @@ def DB_json_hoobang():
         link = hoobang.objects.all().values_list()[kk][4]
         date = hoobang.objects.all().values_list()[kk][1]
         #count = hoobang.objects.all().values_list()[kk][3]
-        source = hoobang.objects.all().values_list()[kk][5]
+        source = hoobang.objects.all().values_list()[kk][6]
         temp_dict = {'day': date, 'title': title, 'link': link, 'source': source}
         temp_list.append(temp_dict)
 
