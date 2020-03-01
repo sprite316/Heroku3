@@ -200,7 +200,7 @@ def clien_parsing():
         url = 'https://www.clien.net/service/group/clien_all?&od=T33&po={}'.format(
             page)
 
-        req = requests.get(url, headers=headers, verify=False)
+        req = requests.get(url, verify=False)
         # cookies = {'session_id': 'CDNSEC=e19a50f57ff50fc4b8485dd88ef59115'}
         # req = requests.get(url)
         #req = urllib.request.Request(url)
