@@ -510,3 +510,49 @@ if __name__ == '__main__':
         new_candidate.save()
 
 
+
+
+
+    ''' 후방주의 '''
+
+    parsed_data_hoobang = []
+    #parsed_data_hoobang = ygosu_hoobang_parsing()
+    parsed_data_hoobang_ou1 = ou_hoobang_parsing1()
+    parsed_data_hoobang_ou2 = ou_hoobang_parsing2()
+
+    parsed_data_hoobang.extend(parsed_data_hoobang_ou1)
+    parsed_data_hoobang.extend(parsed_data_hoobang_ou2)
+    parsed_data_hoobang = sorted(parsed_data_hoobang, key=itemgetter('day'), reverse=1)
+
+
+
+
+    ''' DB 읽기 '''
+    json_data_hoobang = DB_json_hoobang()
+    ''' 이전 파싱 데이터와 비교  이전에 없으면 append '''
+    json_data_hoobang_len = len(json_data_hoobang)
+    parsed_data_hoobang_len = len(parsed_data_hoobang)
+    flag = 0
+    for k in range(0, parsed_data_hoobang_len):
+        for j in range(0, json_data_hoobang_len):
+            if parsed_data_hoobang[k]['link'] in json_data_hoobang[j]['link']:
+                flag = 1
+        if flag == 0:
+            json_data_hoobang.append(parsed_data_hoobang[k])
+        else:
+            flag = 0
+
+    ''' 최종 out 저장 '''
+    json_data_hoobang = sorted(json_data_hoobang, key=itemgetter('day'), reverse=1)
+    toJson_hoobang(json_data_hoobang)
+
+    hoobang.objects.all().delete()
+    for i in range(len(json_data_hoobang)):
+        new_hoobang = hoobang(date=json_data_hoobang[i]["day"],
+                              title=json_data_hoobang[i]["title"],
+                              # count=json_data[i]["count"],
+                              link=json_data_hoobang[i]["link"],
+                              # image=json_data[i]["image"]
+                              source=json_data_hoobang[i]["source"]
+                              )
+        new_hoobang.save()

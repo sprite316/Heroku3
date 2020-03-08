@@ -1,9 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.template import Context, loader
-from .models import hoobang
-import json
+from elections.models import Candidate
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 # list of mobile User Agents
 mobile_uas = [
@@ -21,8 +19,10 @@ mobile_ua_hints = ['SymbianOS', 'Opera Mini', 'iPhone']
 
 
 def index(request):
-    hoobangs = hoobang.objects.all()
-    hoobang_list = hoobang.objects.all()
+    #hoobangs = hoobang.objects.all()
+    hoobangs = Candidate.objects.filter(Q(title__icontains = 'ㅎㅂ') | Q(title__icontains = '후방'))
+    hoobangs = hoobangs.order_by('-date')
+    hoobang_list = hoobangs
     paginator = Paginator(hoobang_list, 20)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
