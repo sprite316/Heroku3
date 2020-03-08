@@ -10,12 +10,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/static/css/style-db8ba5b9e5.min.css" type="text/css">
-    <script type="text/javascript" src="http://s1.daumcdn.net/svc/original/U03/cssjs/jquery/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript"
+            src="http://s1.daumcdn.net/svc/original/U03/cssjs/jquery/jquery-1.10.2.min.js"></script>
     <link rel="stylesheet" href="/static/css/font-awesome-4.7.0/css/font-awesome.min.css">
 </head>
 
 
 <body>
+<!--
 <div>
     <a href="http://djangoyoon3.herokuapp.com/"><img src="/static/img/logo.jpg" height="50"
                                                      style="margin-bottom:-30px"></a>
@@ -27,8 +29,17 @@
 
     </span>
 </div>
+-->
 
 <div id="daumContent" role="main">
+    <div style="width: 30%; height:50px; float: left;">
+        <a href="http://djangoyoon3.herokuapp.com/"><img src="/static/img/logo.jpg" height="50"></a>
+    </div>
+    <div style="width: 250px; height:50px; font-weight:bold; font-size: 1.5em; display:block; float: right;">
+        <a href="http://djangoyoon3.herokuapp.com/elections/">실시간인기글</a>
+        &nbsp; &nbsp;
+        <a href="http://djangoyoon3.herokuapp.com/hoobang/"><img src="/static/img/hoobang.png" height="50"></a>
+    </div>
     <div id="cMain">
         <div>
             <div id="mArticle">
@@ -53,7 +64,8 @@
                       <img src="{{candidate.image}}" width="104" height="72" alt>
                     </div>-->
                                         <div class="wrap_info">
-                                            <span>{{candidate.title}}</span><span style="position:absolute; right:1px; background-color:#f1f1f1; padding:2px 5px;">{{candidate.source}}</span>
+                                            <span>{{ candidate.title }}</span><span
+                                                style="position:absolute; right:1px; background-color:#f1f1f1; padding:2px 5px;">{{ candidate.source }}</span>
                                         </div>
                                     </div>
                                 </a>
@@ -63,7 +75,7 @@
                     </ol>
 
                     <div class="wrap_tit">
-                       <div class="tit_item">
+                        <div class="tit_item">
                             <h3>후방주의 Top 10</h3>
                             <div class="right">
                                 <a href="/hoobang">
@@ -72,27 +84,28 @@
                                 </a>
                             </div>
                         </div>
-                    <ol class="list_popular">
-                        {% for hoobang in hoobangs %}
-                            <li>
-                                <a href={{ hoobang.link }} class="link_popular">
-                                    <div class="thumb_info_type">
-                                        <!--<div class="wrap_thumb">
+                        <ol class="list_popular">
+                            {% for hoobang in hoobangs %}
+                                <li>
+                                    <a href={{ hoobang.link }} class="link_popular">
+                                        <div class="thumb_info_type">
+                                            <!--<div class="wrap_thumb">
                       <img src="{{candidate.image}}" width="104" height="72" alt>
                     </div>-->
-                                        <div class="wrap_info">
-                                            <span>{{hoobang.title}}</span><span style="position:absolute; right:1px; background-color:#f1f1f1; padding:2px 5px;">{{hoobang.source}}</span>
+                                            <div class="wrap_info">
+                                                <span>{{ hoobang.title }}</span><span
+                                                    style="position:absolute; right:1px; background-color:#f1f1f1; padding:2px 5px;">{{ hoobang.source }}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                                <!--{{ hoobang.date }}-->
-                            </li>
-                        {% endfor %}
-                    </ol>
+                                    </a>
+                                    <!--{{ hoobang.date }}-->
+                                </li>
+                            {% endfor %}
+                        </ol>
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>

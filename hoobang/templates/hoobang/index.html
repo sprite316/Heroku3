@@ -3,18 +3,20 @@
 <html lang="en">
 
 <head>
-  <title>맛자랑</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="/static/css/style-db8ba5b9e5.min.css" type="text/css">
-  <script type="text/javascript" src="http://s1.daumcdn.net/svc/original/U03/cssjs/jquery/jquery-1.10.2.min.js"></script>
+    <title>맛자랑</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/css/style-db8ba5b9e5.min.css" type="text/css">
+    <script type="text/javascript"
+            src="http://s1.daumcdn.net/svc/original/U03/cssjs/jquery/jquery-1.10.2.min.js"></script>
 </head>
 
 
 <body>
+<!--
 <div>
     <a href="http://djangoyoon3.herokuapp.com/"><img src="/static/img/logo.jpg" height="50"
                                                      style="margin-bottom:-30px"></a>
@@ -26,71 +28,81 @@
 
     </span>
 </div>
-  <div id="daumContent" role="main">
+-->
+<div id="daumContent" role="main">
+    <div style="width: 30%; height:50px; float: left;">
+        <a href="http://djangoyoon3.herokuapp.com/"><img src="/static/img/logo.jpg" height="50"></a>
+    </div>
+    <div style="width: 250px; height:50px; font-weight:bold; font-size: 1.5em; display:block; float: right;">
+        <a href="http://djangoyoon3.herokuapp.com/elections/">실시간인기글</a>
+        &nbsp; &nbsp;
+        <a href="http://djangoyoon3.herokuapp.com/hoobang/"><img src="/static/img/hoobang.png" height="50"></a>
+    </div>
     <div id="cMain">
-      <div>
-        <div id="mArticle">
-          <div id="home_popular" class="cafe_popular">
-            <div class="wrap_tit">
-              <h3 class="tit_item">후방주의 인기글</h3>
-            </div>
-            <ol class="list_popular">
-              {% for hoobang in posts %}
-              <li>
-                <a href={{hoobang.link}} class="link_popular">
-                  <div class="thumb_info_type">
-                    <!--<div class="wrap_thumb">
+        <div>
+            <div id="mArticle">
+                <div id="home_popular" class="cafe_popular">
+                    <div class="wrap_tit">
+                        <h3 class="tit_item">후방주의 인기글</h3>
+                    </div>
+                    <ol class="list_popular">
+                        {% for hoobang in posts %}
+                            <li>
+                                <a href={{ hoobang.link }} class="link_popular">
+                                    <div class="thumb_info_type">
+                                        <!--<div class="wrap_thumb">
                       <img src="{{candidate.image}}" width="104" height="72" alt>
                     </div>-->
-                    <div class="wrap_info">
-                      <span>{{hoobang.title}}</span><span style="position:absolute; right:1px; background-color:#f1f1f1; padding:2px 5px;">{{hoobang.source}}</span>
-                    </div>
-                  </div>
-                </a>
-                <!--{{hoobang.date}}-->
-              </li>
-              {% endfor %}
-            </ol>
-          <div style="text-align:center;">
-              <ul class="pagination justify-content-center">
-                <!-- 이전 페이지 -->
-                {% if posts.has_previous %}
-                <li class="page-item">
-                  <a href="?page=1" class="page-link">&laquo;</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="?page={{ posts.previous_page_number }}" tabindex="-1">&lt;
-                  </a>
-                </li>
-                {% endif %}
-                <!-- 페이지 범위 및 현재 페이지 -->
-                {% for page in paginator_range %}
-                {% if posts.number == page %}
-                <li class="page-item active">
+                                        <div class="wrap_info">
+                                            <span>{{ hoobang.title }}</span><span
+                                                style="position:absolute; right:1px; background-color:#f1f1f1; padding:2px 5px;">{{ hoobang.source }}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <!--{{hoobang.date}}-->
+                            </li>
+                        {% endfor %}
+                    </ol>
+                    <div style="text-align:center;">
+                        <ul class="pagination justify-content-center">
+                            <!-- 이전 페이지 -->
+                            {% if posts.has_previous %}
+                                <li class="page-item">
+                                    <a href="?page=1" class="page-link">&laquo;</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ posts.previous_page_number }}" tabindex="-1">&lt;
+                                    </a>
+                                </li>
+                            {% endif %}
+                            <!-- 페이지 범위 및 현재 페이지 -->
+                            {% for page in paginator_range %}
+                                {% if posts.number == page %}
+                                    <li class="page-item active">
                   <span class="page-link">{{ page }}
                     <span class="sr-only">(current)</span>
                   </span>
-                </li>
-                {% else %}
-                <li class="page-item">
-                  <a class="page-link" href="?page={{ page }}">{{ page }}</a>
-                </li>
-                {% endif %}
-                {% endfor %}
-                <!-- 다음 페이지 -->
-                {% if posts.has_next %}
-                <li class="page-item">
-                  <a class="page-link" href="?page={{ posts.next_page_number }}">&gt;</a>
-                </li>
-                <li class="page-item">
-                  <a href="?page={{ posts.paginator.num_pages }}" class="page-link">&raquo;</a>
-                </li>
-                {% endif %}
-              </ul>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            <!-- 다음 페이지 -->
+                            {% if posts.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ posts.next_page_number }}">&gt;</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="?page={{ posts.paginator.num_pages }}" class="page-link">&raquo;</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 </body>
