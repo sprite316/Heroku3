@@ -2,6 +2,7 @@ from django.shortcuts import render
 from elections.models import Candidate
 from django.core.paginator import Paginator
 from django.db.models import Q
+from .models import hoobang
 
 # list of mobile User Agents
 mobile_uas = [
@@ -19,11 +20,7 @@ mobile_ua_hints = ['SymbianOS', 'Opera Mini', 'iPhone']
 
 
 def index(request):
-    # hoobangs = hoobang.objects.all()
-    hoobangs = Candidate.objects.filter(
-        Q(title__icontains='ㅎㅂ') | Q(title__icontains='후방') | Q(title__icontains='맥심') | Q(title__icontains='섹스') | Q(
-            title__icontains='19금') | Q(title__icontains='ㅅㅅ') | Q(title__icontains='신재은') | Q(
-            title__icontains='노출') | Q(title__icontains='도끼') | Q(title__icontains='조공') | Q(title__icontains='ㅇㅎ')).order_by('-date')
+    hoobangs = hoobang.objects.all()
     paginator = Paginator(hoobangs, 20)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
