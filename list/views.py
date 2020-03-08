@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from elections.models import Candidate
 from django.db.models import Q
+#from hoobang.views import hoobangs
 
 mobile_uas = [
 	'w3c ','acs-','alav','alca','amoi','audi','avan','benq','bird','blac',
@@ -19,26 +20,9 @@ mobile_ua_hints = [ 'SymbianOS', 'Opera Mini', 'iPhone' ]
 
 def index(request):
 	candidates = Candidate.objects.all().order_by('-date')[0:10]
-	hoobang = Candidate.objects.filter(Q(title__icontains='ㅎㅂ') | Q(title__icontains='후방'))
-	hoobangs = hoobang.order_by('-date')[0:10]
+	hoobangs = Candidate.objects.filter(
+		Q(title__icontains='ㅎㅂ') | Q(title__icontains='후방') | Q(title__icontains='맥심') | Q(title__icontains='섹스') | Q(
+			title__icontains='19금') | Q(title__icontains='ㅅㅅ') | Q(title__icontains='신재은') | Q(
+			title__icontains='노출') | Q(title__icontains='도끼') | Q(title__icontains='조공'))
+	hoobangs = hoobangs.order_by('-date')[0:10]
 	return render(request, 'list/index.html', {'candidates':candidates, 'hoobangs':hoobangs})
-
-
-
-'''
-def index(request):
-    candidates = Candidate.objects.all().order_by('-count')[0:10]
-    #candidate_list = Candidate.objects.all()
-    #paginator = Paginator(candidate_list, 20)
-    #page = request.GET.get('page')
-
-
-    if mobileBrowser(request):
-        return render(request, 'elections/m_index.html', {
-        'candidates':candidates
-        })
-    else:
-        return render(request, 'elections/index.html', {
-        'candidates':candidates
-        })
-'''
