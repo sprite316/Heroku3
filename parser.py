@@ -363,6 +363,64 @@ def ygosu_hoobang_parsing():
     return temp_list
 
 
+
+def ou_hoobang_parsing1(): #ㅎㅂ
+    temp_dict = {}
+    temp_list = []
+
+    for page in range(1,2):
+        url = 'http://www.todayhumor.co.kr/board/list.php?table=humorbest&page={}&kind=search&search_table_name=humorbest&keyfield=subject&keyword=ㅎㅂ'.format(page)
+        req = requests.get(url, headers=headers)
+        time.sleep(10)
+        html = req.text
+        time.sleep(10)
+        soup = BS(html, "html.parser")
+
+        table = soup.find(class_="table_list")
+        tits = table.find_all(class_="subject")
+        counts = table.find_all(class_="hits")
+        days = table.find_all(class_="date")
+        for tit, count, day in zip(tits, counts, days):
+            title = tit.a.get_text()
+            link = 'http://www.todayhumor.co.kr' + tit.a.get('href')
+            read = count.get_text()
+            date_p = day.get_text()
+            date = str(datetime.datetime.strptime(date_p, "%y/%m/%d %H:%M"))
+            # temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'image': image}
+            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'source': '오유'}
+            temp_list.append(temp_dict)
+        # toJson(temp_list)
+    return temp_list
+
+def ou_hoobang_parsing2(): #후방
+    temp_dict = {}
+    temp_list = []
+
+    for page in range(1,2):
+        url = 'http://www.todayhumor.co.kr/board/list.php?table=humorbest&page={}&kind=search&search_table_name=humorbest&keyfield=subject&keyword=후방'.format(page)
+        req = requests.get(url, headers=headers)
+        time.sleep(10)
+        html = req.text
+        time.sleep(10)
+        soup = BS(html, "html.parser")
+
+        table = soup.find(class_="table_list")
+        tits = table.find_all(class_="subject")
+        counts = table.find_all(class_="hits")
+        days = table.find_all(class_="date")
+        for tit, count, day in zip(tits, counts, days):
+            title = tit.a.get_text()
+            link = 'http://www.todayhumor.co.kr' + tit.a.get('href')
+            read = count.get_text()
+            date_p = day.get_text()
+            date = str(datetime.datetime.strptime(date_p, "%y/%m/%d %H:%M"))
+            # temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'image': image}
+            temp_dict = {'day': date, 'title': title, 'count': read, 'link': link, 'source': '오유'}
+            temp_list.append(temp_dict)
+        # toJson(temp_list)
+    return temp_list
+
+
 def DB_json():
     temp_dict = {}
     temp_list = []
@@ -404,14 +462,14 @@ def DB_json_hoobang():
 
 if __name__ == '__main__':
     parsed_data = []
-    parsed_data_ygosu = ygosu_parsing()
+    #parsed_data_ygosu = ygosu_parsing()
     parsed_data_ou = ou_parsing()
     parsed_data_slr = SLR_parsing()
     parsed_data_clien = clien_parsing()
     parsed_data_ppomppu = ppomppu_parsing()
     parsed_data_bobae = bobae_parsing()
 
-    parsed_data.extend(parsed_data_ygosu)
+    #parsed_data.extend(parsed_data_ygosu)
     parsed_data.extend(parsed_data_ou)
     parsed_data.extend(parsed_data_slr)
     parsed_data.extend(parsed_data_clien)
@@ -458,8 +516,16 @@ if __name__ == '__main__':
     ''' 후방주의 '''
 
     parsed_data_hoobang = []
-    parsed_data_hoobang = ygosu_hoobang_parsing()
+    #parsed_data_hoobang = ygosu_hoobang_parsing()
+    parsed_data_hoobang_ou1 = ou_hoobang_parsing1()
+    parsed_data_hoobang_ou2 = ou_hoobang_parsing2()
+
+    parsed_data_hoobang.extend(parsed_data_hoobang_ou1)
+    parsed_data_hoobang.extend(parsed_data_hoobang_ou2)
     parsed_data_hoobang = sorted(parsed_data_hoobang, key=itemgetter('day'), reverse=1)
+
+
+
 
     ''' DB 읽기 '''
     json_data_hoobang = DB_json_hoobang()
