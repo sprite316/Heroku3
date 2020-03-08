@@ -24,7 +24,6 @@ def index(request):
         Q(title__icontains='ㅎㅂ') | Q(title__icontains='후방') | Q(title__icontains='맥심') | Q(title__icontains='섹스') | Q(
             title__icontains='19금') | Q(title__icontains='ㅅㅅ') | Q(title__icontains='신재은') | Q(
             title__icontains='노출') | Q(title__icontains='도끼') | Q(title__icontains='조공') | Q(title__icontains='ㅇㅎ'))
-    hoobangs = hoobangs.order_by('-date')
     paginator = Paginator(hoobangs, 20)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
