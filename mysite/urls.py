@@ -16,11 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from django.conf.urls import url,include
+from django.conf.urls import url, include
 
 urlpatterns = [
-    path('', include('list.urls')),
-    path('elections/', include('elections.urls')),
-    path('hoobang/', include('hoobang.urls')),
+    path('', include('MainList.urls')),
+    path('HotList/', include('HotList.urls')),
+    path('HoobangList/', include('HoobangList.urls')),
     path('admin/', admin.site.urls),
 ]

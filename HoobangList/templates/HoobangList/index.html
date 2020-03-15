@@ -1,0 +1,91 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>맛자랑</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/css/style-db8ba5b9e5.min.css" type="text/css">
+</head>
+
+
+<body>
+
+<div class="Logo">
+    <a href="http://matjarang.herokuapp.com/"><img class="Mainpic" src="/static/img/logo.jpg"></a>
+</div>
+<div class="Category">
+    <div class="HotList">
+        <a class="Hottxt" href="http://matjarang.herokuapp.com/HotList/">실시간인기글</a>
+        <a href="http://matjarang.herokuapp.com/HoobangList/"><img class="Hotpic" src="/static/img/hoobang.png"></a>
+    </div>
+</div>
+
+<div class="cafe_popular">
+    후방주의 인기글
+</div>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>제목</th>
+        <th>출처</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for HoobangList in posts %}
+        <tr>
+            <td><a href={{ HoobangList.link }}>
+                {{ HoobangList.title }}</a></td>
+            <td>{{ HoobangList.source }}</td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+
+</table>
+
+<!--<a class="btn btn-default pull_right">글쓰기</a>-->
+
+<div style="text-align:center;">
+    <ul class="pagination justify-content-center">
+        <!-- 이전 페이지 -->
+        {% if posts.has_previous %}
+            <li class="page-item">
+                <a href="?page=1" class="page-link">&laquo;</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ posts.previous_page_number }}" tabindex="-1">&lt;
+                </a>
+            </li>
+        {% endif %}
+        <!-- 페이지 범위 및 현재 페이지 -->
+        {% for page in paginator_range %}
+            {% if posts.number == page %}
+                <li class="page-item active">
+                                        <span class="page-link">{{ page }}
+                                            <span class="sr-only">(current)</span>
+                                        </span>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        <!-- 다음 페이지 -->
+        {% if posts.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ posts.next_page_number }}">&gt;</a>
+            </li>
+            <li class="page-item">
+                <a href="?page={{ posts.paginator.num_pages }}" class="page-link">&raquo;</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+</body>
