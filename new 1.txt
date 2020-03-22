@@ -1,0 +1,54 @@
+python 설치
+https://www.python.org/downloads/
+
+git 설치
+https://git-scm.com/downloads
+
+heroku 설치
+https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up
+
+heroku login
+heroku addons:create heroku-postgresql:hobby-dev
+
+
+heroku git:remote -a <yourapp>
+git remote -v
+heroku list
+heroku info --app <app name>
+git remote add heroku <git url>
+
+
+git add -A
+git status
+git commit -m "test"
+git push origin master
+git push heroku master
+heroku run python3 parser.py
+
+heroku run python3 parser_delete.py
+
+heroku run python3 manage.py makemigrations
+heroku run python3 manage.py migrate
+heroku run python3 parser.py
+
+
+heroku run bash --app matjarang
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+pip freeze > requirements.txt
+git add -A
+git commit -m "test"
+git push heroku master
+
+
+# Cannot run more than 1 Free size dynos.
+heroku ps
+heroku ps:stop <DYNO>
+heroku ps:stop scheduler
+
+
+
+# local
+
+python manage.py runserver

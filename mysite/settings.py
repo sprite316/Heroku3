@@ -15,22 +15,20 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'w@)7f-_z(!b5_afkegoq+ln^bmq!i8*ke)!y^0_fpiy02th*ak'
+# SECRET_KEY = 'w@)7f-_z(!b5_afkegoq+ln^bmq!i8*ke)!y^0_fpiy02th*ak'
+#SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'j^vpj-2x-e+7mnr(pbaczr-&&qr(y(*$-c%n82346obc6f4%dk')
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'w@)7f-_z(!b5_afkegoq+ln^bmq!i8*ke)!y^0_fpiy02th*ak')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
-#DEBUG = False
-DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
-
+# DEBUG = True
+# DEBUG = False
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = ['djangoyoon3.herokuapp.com', '127.0.0.1']
-
 
 # Application definition
 
@@ -57,7 +55,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
-
 ROOT_URLCONF = 'mysite.urls'
 
 TEMPLATES = [
@@ -78,7 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 DATABASES = {
@@ -88,13 +84,13 @@ DATABASES = {
     }
 }
 
-#SECRET_KEY = config('SECRET_KEY')
-#DEBUG = config('DEBUG', default=False, cast=bool)
-#DATABASES = {
+# SECRET_KEY = config('SECRET_KEY')
+# DEBUG = config('DEBUG', default=False, cast=bool)
+# DATABASES = {
 #    'default': dj_database_url.config(
 #    default=config('DATABASE_URL')
 #    )
-#}
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -114,7 +110,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -128,43 +123,20 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-
-
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIR = [
     os.path.join(PROJECT_ROOT, 'static'),
 ]
-#STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 # Static root를 지정하지 않으면 에러 발생
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # whitenoise 4 버전부터 설정이 바뀌었기 때문에 이 부분을 꼭 기존의 내용들에서 업데이트 해야 함
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 import dj_database_url
+
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
-
-
-#Log 파일 만들기 20.02.02
-#LOGGING = {
-#    'version':1,
-#    'disable_existing_loggers': False,
-#    'handlers' : {
-#        'file' : {
-#            'level' : 'DEBUG',
-#            'class' : 'logging.FileHandler',
-#            'filename' : 'debug.log',
-#        },
-#    },
-#    'loggers' : {
-#        'django' : {
-#            'handlers' : ['file'],
-#            'level' : 'DEBUG',
-#            'propagate' : True,
-#        },
-#    }
-#}

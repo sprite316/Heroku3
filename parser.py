@@ -1,5 +1,4 @@
 import os
-import urllib
 import datetime
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
@@ -8,26 +7,20 @@ from operator import itemgetter
 
 django.setup()
 
-from urllib.request import urlopen
 from bs4 import BeautifulSoup as BS
 import json
-import schedule
 import time
 import requests
-from elections.models import Candidate
-from hoobang.models import hoobang
+from HotList.models import HotList
+from HoobangList.models import HoobangList
 from datetime import date, timedelta
 
 session = requests.Session()
-# headers = {'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 KAKAOTALK 8.6.2'}
-# headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36'}
-# headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763'}
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763'}
-
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763'}
 
 ''' 후방 키워드 '''
 hbkeywords = ['ㅎㅂ', '후방', '섹스', 'ㅅㅅ', 'ㅇㅎ', '은꼴', '맥심']
-
 
 
 def toJson(mnet_dict):
@@ -207,8 +200,8 @@ def clien_parsing():
         req = requests.get(url, headers=headers, verify=False)
         # cookies = {'session_id': 'CDNSEC=e19a50f57ff50fc4b8485dd88ef59115'}
         # req = requests.get(url)
-        #req = urllib.request.Request(url)
-        #req = urllib.request.urlopen(req)
+        # req = urllib.request.Request(url)
+        # req = urllib.request.urlopen(req)
         html = req.text
         soup = BS(html, "html.parser")
         table = soup.find(class_="list_content")
@@ -243,10 +236,10 @@ def bobae_parsing():
             page)
 
         req = requests.get(url, headers=headers, verify=False)
-        #time.sleep(10)
+        # time.sleep(10)
         req.encoding = 'utf-8'
         html = req.text
-        #time.sleep(10)
+        # time.sleep(10)
         soup = BS(html, "html.parser")
 
         table = soup.find(class_="clistTable02")
@@ -294,7 +287,10 @@ def bobae_parsing():
     # toJson(temp_list)
     return temp_list
 
+
 ''' 뽐뿌 '''
+
+
 def ppomppu_parsing():
     temp_dict = {}
     temp_list = []
@@ -332,7 +328,6 @@ def ppomppu_parsing():
     return temp_list
 
 
-
 ''' 후방주의 '''
 
 
@@ -368,13 +363,11 @@ def ygosu_hoobang_parsing():
     return temp_list
 
 
-
-
 def ou_hoobang_parsing():
     temp_dict = {}
     temp_list = []
 
-    for page in range(1,2):
+    for page in range(1, 2):
         url = 'http://www.todayhumor.co.kr/board/list.php?table=total&page={}&kind=total'.format(page)
         req = requests.get(url, headers=headers)
         time.sleep(10)
@@ -398,7 +391,6 @@ def ou_hoobang_parsing():
                     temp_list.append(temp_dict)
 
     return temp_list
-
 
 
 def SLR_hoobang_parsing():
@@ -441,7 +433,6 @@ def SLR_hoobang_parsing():
     return temp_list
 
 
-
 def clien_hoobang_parsing():
     temp_dict = {}
     temp_list = []
@@ -451,8 +442,8 @@ def clien_hoobang_parsing():
         req = requests.get(url, headers=headers, verify=False)
         # cookies = {'session_id': 'CDNSEC=e19a50f57ff50fc4b8485dd88ef59115'}
         # req = requests.get(url)
-        #req = urllib.request.Request(url)
-        #req = urllib.request.urlopen(req)
+        # req = urllib.request.Request(url)
+        # req = urllib.request.urlopen(req)
         html = req.text
         soup = BS(html, "html.parser")
         table = soup.find(class_="list_content")
@@ -484,10 +475,10 @@ def bobae_hoobang_parsing():
             page)
 
         req = requests.get(url, headers=headers, verify=False)
-        #time.sleep(10)
+        # time.sleep(10)
         req.encoding = 'utf-8'
         html = req.text
-        #time.sleep(10)
+        # time.sleep(10)
         soup = BS(html, "html.parser")
 
         table = soup.find(class_="clistTable02")
@@ -537,21 +528,19 @@ def bobae_hoobang_parsing():
     return temp_list
 
 
-
-
 def DB_json():
     temp_dict = {}
     temp_list = []
 
-    DB_data_all= Candidate.objects.all().values_list()
+    DB_data_all = HotList.objects.all().values_list()
 
     for kk in range(0, len(DB_data_all)):
-        title = Candidate.objects.all().values_list()[kk][2]
-        link = Candidate.objects.all().values_list()[kk][4]
-        date = Candidate.objects.all().values_list()[kk][1]
-        count = Candidate.objects.all().values_list()[kk][3]
-        source = Candidate.objects.all().values_list()[kk][6]
-        temp_dict = {'day': date, 'title': title, 'link': link, 'count':count, 'source': source}
+        title = HotList.objects.all().values_list()[kk][2]
+        link = HotList.objects.all().values_list()[kk][4]
+        date = HotList.objects.all().values_list()[kk][1]
+        count = HotList.objects.all().values_list()[kk][3]
+        source = HotList.objects.all().values_list()[kk][6]
+        temp_dict = {'day': date, 'title': title, 'link': link, 'count': count, 'source': source}
         temp_list.append(temp_dict)
 
     # toJson(temp_list)
@@ -562,25 +551,19 @@ def DB_json_hoobang():
     temp_dict = {}
     temp_list = []
 
-    DB_data_all= hoobang.objects.all().values_list()
+    DB_data_all = HoobangList.objects.all().values_list()
 
     for kk in range(0, len(DB_data_all)):
-        title = hoobang.objects.all().values_list()[kk][2]
-        link = hoobang.objects.all().values_list()[kk][4]
-        date = hoobang.objects.all().values_list()[kk][1]
-        #count = hoobang.objects.all().values_list()[kk][3]
-        source = hoobang.objects.all().values_list()[kk][6]
+        title = HoobangList.objects.all().values_list()[kk][2]
+        link = HoobangList.objects.all().values_list()[kk][4]
+        date = HoobangList.objects.all().values_list()[kk][1]
+        # count = hoobang.objects.all().values_list()[kk][3]
+        source = HoobangList.objects.all().values_list()[kk][6]
         temp_dict = {'day': date, 'title': title, 'link': link, 'source': source}
         temp_list.append(temp_dict)
 
     # toJson(temp_list)
     return temp_list
-
-
-
-
-
-
 
 
 '''  저장 '''
@@ -598,7 +581,6 @@ if __name__ == '__main__':
     parsed_data.extend(parsed_data_clien)
     parsed_data.extend(parsed_data_ppomppu)
     parsed_data.extend(parsed_data_bobae)
-
 
     ''' DB 읽기 '''
     json_data = DB_json()
@@ -621,43 +603,38 @@ if __name__ == '__main__':
     ''' 최종 out 저장 '''
     toJson(json_data)
 
-    Candidate.objects.all().delete()
+    HotList.objects.all().delete()
     for i in range(len(json_data)):
-        new_candidate = Candidate(date=json_data[i]["day"],
-                                  title=json_data[i]["title"],
-                                  count=json_data[i]["count"],
-                                  link=json_data[i]["link"],
-                                  source=json_data[i]["source"]
-                                  # image=json_data[i]["image"]
-                                  )
-        new_candidate.save()
-
-
-
-
+        new_HotList = HotList(date=json_data[i]["day"],
+                              title=json_data[i]["title"],
+                              count=json_data[i]["count"],
+                              link=json_data[i]["link"],
+                              source=json_data[i]["source"]
+                              # image=json_data[i]["image"]
+                              )
+        new_HotList.save()
 
     ''' 후방주의 저장 '''
 
     parsed_data_hoobang = []
-    #parsed_data_hoobang = ygosu_hoobang_parsing()
+    # parsed_data_hoobang = ygosu_hoobang_parsing()
     parsed_data_hoobang_ou = ou_hoobang_parsing()
     parsed_data_hoobang_slr = SLR_hoobang_parsing()
     parsed_data_hoobang_clien = clien_hoobang_parsing()
     parsed_data_hoobang_bobae = bobae_hoobang_parsing()
-    #parsed_data_hoobang_ppomppu = ppomppu_hoobang_parsing()
+    # parsed_data_hoobang_ppomppu = ppomppu_hoobang_parsing()
 
     parsed_data_hoobang.extend(parsed_data_hoobang_ou)
     parsed_data_hoobang.extend(parsed_data_hoobang_slr)
     parsed_data_hoobang.extend(parsed_data_hoobang_clien)
-    #parsed_data_hoobang.extend(parsed_data_hoobang_ppomppu)
+    parsed_data_hoobang.extend(parsed_data_hoobang_bobae)
+    # parsed_data_hoobang.extend(parsed_data_hoobang_ppomppu)
 
     parsed_data_hoobang = sorted(parsed_data_hoobang, key=itemgetter('day'), reverse=1)
 
-
-
-
     ''' DB 읽기 '''
     json_data_hoobang = DB_json_hoobang()
+
     ''' 이전 파싱 데이터와 비교  이전에 없으면 append '''
     json_data_hoobang_len = len(json_data_hoobang)
     parsed_data_hoobang_len = len(parsed_data_hoobang)
@@ -675,13 +652,13 @@ if __name__ == '__main__':
     json_data_hoobang = sorted(json_data_hoobang, key=itemgetter('day'), reverse=1)
     toJson_hoobang(json_data_hoobang)
 
-    hoobang.objects.all().delete()
+    HoobangList.objects.all().delete()
     for i in range(len(json_data_hoobang)):
-        new_hoobang = hoobang(date=json_data_hoobang[i]["day"],
-                              title=json_data_hoobang[i]["title"],
-                              # count=json_data[i]["count"],
-                              link=json_data_hoobang[i]["link"],
-                              # image=json_data[i]["image"]
-                              source=json_data_hoobang[i]["source"]
-                              )
-        new_hoobang.save()
+        new_HoobangList = HoobangList(date=json_data_hoobang[i]["day"],
+                                      title=json_data_hoobang[i]["title"],
+                                      # count=json_data[i]["count"],
+                                      link=json_data_hoobang[i]["link"],
+                                      # image=json_data[i]["image"]
+                                      source=json_data_hoobang[i]["source"]
+                                      )
+        new_HoobangList.save()
